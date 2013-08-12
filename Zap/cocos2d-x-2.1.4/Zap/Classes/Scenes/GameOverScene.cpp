@@ -41,6 +41,11 @@ bool GameOver::init()
 
 	createMenu();
 
+	if( SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying() )
+	{
+		SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+	}
+
 	return true;
 }
 
