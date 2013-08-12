@@ -54,6 +54,8 @@ bool GameWorld::init()
 
 	this->schedule( schedule_selector(GameWorld::update) );
 
+	SimpleAudioEngine::sharedEngine()->playBackgroundMusic("Zap_BackgroundMainLoop.mp3", true );
+
 	return true;
 }
 
