@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'ZapIOS' target in the 'ZapIOS' project
+//
+
+#ifdef __OBJC__
+	#import <Foundation/Foundation.h>
+	#import <UIKit/UIKit.h>
+#endif
