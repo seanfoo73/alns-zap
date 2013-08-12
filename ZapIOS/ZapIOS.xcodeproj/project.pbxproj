@@ -295,6 +295,7 @@
 		DB4E357E17B8FF89006859AC /* GreenBug.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4E357817B8FF89006859AC /* GreenBug.png */; };
 		DB4E357F17B8FF89006859AC /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4E357917B8FF89006859AC /* HelloWorld.png */; };
 		DB4E358017B8FF89006859AC /* RedBug.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4E357A17B8FF89006859AC /* RedBug.png */; };
+		DB4E358617B9A789006859AC /* Zap_BackgroundMainLoop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB4E358517B9A789006859AC /* Zap_BackgroundMainLoop.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -912,6 +913,7 @@
 		DB4E357817B8FF89006859AC /* GreenBug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GreenBug.png; path = "../../Zap/cocos2d-x-2.1.4/Zap/Resources/GreenBug.png"; sourceTree = "<group>"; };
 		DB4E357917B8FF89006859AC /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = HelloWorld.png; path = "../../Zap/cocos2d-x-2.1.4/Zap/Resources/HelloWorld.png"; sourceTree = "<group>"; };
 		DB4E357A17B8FF89006859AC /* RedBug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RedBug.png; path = "../../Zap/cocos2d-x-2.1.4/Zap/Resources/RedBug.png"; sourceTree = "<group>"; };
+		DB4E358517B9A789006859AC /* Zap_BackgroundMainLoop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Zap_BackgroundMainLoop.mp3; path = "../../Zap/cocos2d-x-2.1.4/Zap/Resources/Zap_BackgroundMainLoop.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -983,6 +985,7 @@
 		DB4E318D17B8FAC8006859AC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DB4E358517B9A789006859AC /* Zap_BackgroundMainLoop.mp3 */,
 				DB4E357517B8FF89006859AC /* BlueBug.png */,
 				DB4E357617B8FF89006859AC /* CloseNormal.png */,
 				DB4E357717B8FF89006859AC /* CloseSelected.png */,
@@ -2260,6 +2263,7 @@
 				DB4E357E17B8FF89006859AC /* GreenBug.png in Resources */,
 				DB4E357F17B8FF89006859AC /* HelloWorld.png in Resources */,
 				DB4E358017B8FF89006859AC /* RedBug.png in Resources */,
+				DB4E358617B9A789006859AC /* Zap_BackgroundMainLoop.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2669,6 +2673,7 @@
 				DB4E352817B8FAD1006859AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
