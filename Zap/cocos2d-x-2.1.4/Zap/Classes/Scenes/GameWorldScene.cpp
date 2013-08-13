@@ -9,6 +9,8 @@
 
 #include "SimpleAudioEngine.h"
 
+#include <algorithm>
+
 using namespace cocos2d;
 using namespace CocosDenshion;
 
@@ -55,7 +57,12 @@ bool GameWorld::init()
 	this->schedule( schedule_selector(GameWorld::update) );
 
 	m_pLightningSegmentBatch = CCSpriteBatchNode::create( "LightningSegment.png" );
+	m_pLightningSegmentBatch->removeAllChildrenWithCleanup( true );
 	this->addChild(m_pLightningSegmentBatch);
+
+	m_pLightningEndBatch = CCSpriteBatchNode::create( "LightningEnd.png" );
+	m_pLightningEndBatch->removeAllChildrenWithCleanup( true );
+	this->addChild(m_pLightningEndBatch);
 
 	SimpleAudioEngine::sharedEngine()->playBackgroundMusic("Zap_BackgroundMainLoop.mp3", true );
 
@@ -139,7 +146,8 @@ void GameWorld::update(float _dt)
 	}
 
 	//sprintf( testLabelStringBuf, "Bugs Hit by Lightning: %d", GameManager::Instance()->m_BugsHitByLightning->size() );
-	sprintf( testLabelStringBuf, "Score: %d", GameManager::Instance()->m_Score );
+	//sprintf( testLabelStringBuf, "Score: %d", GameManager::Instance()->m_Score );
+	sprintf( testLabelStringBuf, "End Points: %d", endCount );
 	const char* testLabelString = &testLabelStringBuf[0];
 	m_pTestLabel->setString(testLabelString);
 }
@@ -236,6 +244,8 @@ void GameWorld::DrawLightning()
 	cocos2d::ccDrawColor4F( 0.0f, 0.930f, 0.930f, 1.0f );
 
 	m_pLightningSegmentBatch->removeAllChildrenWithCleanup( true );
+	m_pLightningEndBatch->removeAllChildrenWithCleanup( true );
+	endCount = 0;
 
 	for( int i= 0; i < bugs->size(); i++ )
 	{
@@ -246,10 +256,13 @@ void GameWorld::DrawLightning()
 			ccDrawLine( ccp( size.width/2, size.height/2 ), 		//from
 						(*bugs)[i]->m_pSprite->getPosition() );		//to
 			/**/
-
+			GenerateLightningPointsList( ccp( size.width/2, size.height/2 ), 			//from
+										(*bugs)[i]->m_pSprite->getPosition() ); 		//to
+			/**
 			DrawLightningLine( ccp( size.width/2, size.height/2 ), 	//from
 						(*bugs)[i]->m_pSprite->getPosition(), 		//to
 						2 );
+			/**/
 		}
 		else
 		{
@@ -257,10 +270,13 @@ void GameWorld::DrawLightning()
 			ccDrawLine( (*bugs)[i-1]->m_pSprite->getPosition(), 	//from
 						(*bugs)[i]->m_pSprite->getPosition() );		//to
 			/**/
-
+			GenerateLightningPointsList( (*bugs)[i-1]->m_pSprite->getPosition(), 		//from
+					   	   	   	   	   	   (*bugs)[i]->m_pSprite->getPosition() ); 		//to
+			/**
 			DrawLightningLine( (*bugs)[i-1]->m_pSprite->getPosition(), 		//from
 							   (*bugs)[i]->m_pSprite->getPosition(), 		//to
 							   2 );
+			/**/
 		}
 	}
 }
@@ -272,19 +288,59 @@ void GameWorld::DrawLightningLine( CCPoint start, CCPoint end, float thickness )
 
 	CCPoint tangent = ccp( end.x - start.x, end.y - start.y );
 	float rotation = float( atan2( tangent.y, tangent.x ) );
+	float trueRotationRad = -rotation * (180 / 3.14 );
 
 	CCSprite* pSegment = CCSprite::createWithTexture( m_pLightningSegmentBatch->getTexture() );
 
-	CCPoint middleOrigin = ccp( 0, pSegment->getContentSize().height / 2.0f );
 	float lengthScale = start.getDistance( end );
 
 	pSegment->setPosition( start );
 	pSegment->setScaleX( lengthScale );
 	pSegment->setScaleY( thicknessScale );
-	pSegment->setRotation( -rotation * ( 180 / 3.14 ) );
+	pSegment->setRotation( trueRotationRad );
 	pSegment->setPosition( ccp( start.x + tangent.x/2, start.y + tangent.y/2 ) );
 
 	m_pLightningSegmentBatch->addChild(pSegment, 0);
+
+	CCSprite* pStart = CCSprite::createWithTexture( m_pLightningEndBatch->getTexture() );
+	CCSprite* pEnd = CCSprite::createWithTexture( m_pLightningEndBatch->getTexture() );
+
+	pStart->setPosition( start );
+	pStart->setScaleX( thicknessScale );
+	pStart->setScaleY( thicknessScale );
+	pStart->setRotation( trueRotationRad );
+	m_pLightningEndBatch->addChild( pStart, 0 );
+
+	pEnd->setPosition( end );
+	pEnd->setScaleX( thicknessScale );
+	pEnd->setScaleY( thicknessScale );
+	pEnd->setRotation( trueRotationRad + 3.14 );
+	m_pLightningEndBatch->addChild( pEnd, 0 );
+
+	endCount += 2;
+}
+
+void GameWorld::GenerateLightningPointsList( CCPoint start, CCPoint end )
+{
+	std::vector<float> positions;
+
+	CCPoint tangent = ccp( end.x - start.x, end.y - start.y );
+	float length = start.getDistance( end );
+
+	for( int i = 0; i < length/4; i++ )
+	{
+		positions.push_back( ( arc4random() % 100 ) / 100 );
+	}
+	std::sort (positions.begin(), positions.end() );
+
+	CCPoint prevPoint = start;
+	for( int i = 0; i <= 4; i++ )
+	{
+		CCPoint nextPoint = ccp ( 	float(start.x) + float(i/4) * float(tangent.x),
+									float(start.y) + float(i/4) * float(tangent.y) );
+		DrawLightningLine( prevPoint, nextPoint, 2 );
+		prevPoint = nextPoint;
+	}
 }
 
 void GameWorld::UpdateGameTime( float _dt )
