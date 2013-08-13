@@ -54,6 +54,9 @@ bool GameWorld::init()
 
 	this->schedule( schedule_selector(GameWorld::update) );
 
+	m_pLightningSegmentBatch = CCSpriteBatchNode::create( "LightningSegment.png" );
+	this->addChild(m_pLightningSegmentBatch);
+
 	SimpleAudioEngine::sharedEngine()->playBackgroundMusic("Zap_BackgroundMainLoop.mp3", true );
 
 	return true;
@@ -132,7 +135,7 @@ void GameWorld::update(float _dt)
 	m_remainingChainTime -= _dt;
 	if( m_remainingChainTime <= 0 )
 	{
-		GameManager::Instance()->DestroyChain();
+		//GameManager::Instance()->DestroyChain();
 	}
 
 	//sprintf( testLabelStringBuf, "Bugs Hit by Lightning: %d", GameManager::Instance()->m_BugsHitByLightning->size() );
@@ -232,20 +235,56 @@ void GameWorld::DrawLightning()
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 	cocos2d::ccDrawColor4F( 0.0f, 0.930f, 0.930f, 1.0f );
 
+	m_pLightningSegmentBatch->removeAllChildrenWithCleanup( true );
+
 	for( int i= 0; i < bugs->size(); i++ )
 	{
 		//first stretch of lightning
 		if( i == 0 )
 		{
+			/**
 			ccDrawLine( ccp( size.width/2, size.height/2 ), 		//from
 						(*bugs)[i]->m_pSprite->getPosition() );		//to
+			/**/
+
+			DrawLightningLine( ccp( size.width/2, size.height/2 ), 	//from
+						(*bugs)[i]->m_pSprite->getPosition(), 		//to
+						2 );
 		}
 		else
 		{
+			/**
 			ccDrawLine( (*bugs)[i-1]->m_pSprite->getPosition(), 	//from
 						(*bugs)[i]->m_pSprite->getPosition() );		//to
+			/**/
+
+			DrawLightningLine( (*bugs)[i-1]->m_pSprite->getPosition(), 		//from
+							   (*bugs)[i]->m_pSprite->getPosition(), 		//to
+							   2 );
 		}
 	}
+}
+
+void GameWorld::DrawLightningLine( CCPoint start, CCPoint end, float thickness )
+{
+	const float ImageThickness = 8;
+	float thicknessScale = thickness / ImageThickness;
+
+	CCPoint tangent = ccp( end.x - start.x, end.y - start.y );
+	float rotation = float( atan2( tangent.y, tangent.x ) );
+
+	CCSprite* pSegment = CCSprite::createWithTexture( m_pLightningSegmentBatch->getTexture() );
+
+	CCPoint middleOrigin = ccp( 0, pSegment->getContentSize().height / 2.0f );
+	float lengthScale = start.getDistance( end );
+
+	pSegment->setPosition( start );
+	pSegment->setScaleX( lengthScale );
+	pSegment->setScaleY( thicknessScale );
+	pSegment->setRotation( -rotation * ( 180 / 3.14 ) );
+	pSegment->setPosition( ccp( start.x + tangent.x/2, start.y + tangent.y/2 ) );
+
+	m_pLightningSegmentBatch->addChild(pSegment, 0);
 }
 
 void GameWorld::UpdateGameTime( float _dt )

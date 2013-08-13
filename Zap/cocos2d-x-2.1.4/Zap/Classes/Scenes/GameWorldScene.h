@@ -24,6 +24,9 @@ class GameWorld : public cocos2d::CCLayer
 		virtual void draw();
 		void DrawLightning();
 
+		/* Lightning Draw calls, perhaps move this to its own class? */
+		void DrawLightningLine( cocos2d::CCPoint start, cocos2d::CCPoint end, float thickness );
+
 		bool IsGameOver();
 		void TransitionToGameOver();
 
@@ -50,6 +53,8 @@ class GameWorld : public cocos2d::CCLayer
 
 		float m_remainingGameTime;
 		float m_remainingChainTime;
+
+		cocos2d::CCSpriteBatchNode* m_pLightningSegmentBatch;
 };
 
 #endif /* __GAMEWORLD_SCENE_H__ */
