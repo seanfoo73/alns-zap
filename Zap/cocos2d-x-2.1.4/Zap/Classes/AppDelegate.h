@@ -32,6 +32,8 @@ class  AppDelegate : private cocos2d::CCApplication
 		@param  the pointer of the application
 		*/
 		virtual void applicationWillEnterForeground();
+
+		virtual void LoadResources();
 	private:
 		//CCScene* m_GameMenuScene;
 		//CCScene* m_GameOverScene;

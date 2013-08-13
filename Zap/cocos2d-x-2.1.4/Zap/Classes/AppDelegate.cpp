@@ -72,3 +72,14 @@ void AppDelegate::applicationWillEnterForeground()
     // if you use SimpleAudioEngine, it must resume here
     CocosDenshion::SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }
+
+void AppDelegate::LoadResources()
+{
+	/* art */
+	CCTextureCache::sharedTextureCache()->addImage( "BlueBug.png" );
+	CCTextureCache::sharedTextureCache()->addImage( "RedBug.png" );
+	CCTextureCache::sharedTextureCache()->addImage( "GreenBug.png" );
+
+	/* bkg music */
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic("Zap_BackgroundMainLoop.mp3");
+}
