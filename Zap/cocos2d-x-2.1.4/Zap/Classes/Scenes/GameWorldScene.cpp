@@ -325,6 +325,7 @@ void GameWorld::GenerateLightningPointsList( CCPoint start, CCPoint end )
 	std::vector<float> positions;
 
 	CCPoint tangent = ccp( end.x - start.x, end.y - start.y );
+	CCPoint normal = ccpNormalize( ccp( tangent.y, -tangent.x ) );
 	float length = start.getDistance( end );
 
 	for( int i = 0; i < length/4; i++ )
@@ -334,13 +335,14 @@ void GameWorld::GenerateLightningPointsList( CCPoint start, CCPoint end )
 	std::sort (positions.begin(), positions.end() );
 
 	CCPoint prevPoint = start;
-	for( int i = 0; i <= 4; i++ )
+	for( int i = 1; i < 4; i++ )
 	{
-		CCPoint nextPoint = ccp ( 	float(start.x) + float(i/4) * float(tangent.x),
-									float(start.y) + float(i/4) * float(tangent.y) );
+		CCPoint nextPoint = ccp ( 	start.x + float(i)/4 * tangent.x + 40 * normal.x,
+									start.y + float(i)/4 * tangent.y + 40 * normal.y );
 		DrawLightningLine( prevPoint, nextPoint, 2 );
 		prevPoint = nextPoint;
 	}
+	DrawLightningLine( prevPoint, end, 2 );
 }
 
 void GameWorld::UpdateGameTime( float _dt )
