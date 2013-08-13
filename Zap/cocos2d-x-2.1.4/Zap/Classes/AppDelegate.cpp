@@ -80,6 +80,9 @@ void AppDelegate::LoadResources()
 	CCTextureCache::sharedTextureCache()->addImage( "RedBug.png" );
 	CCTextureCache::sharedTextureCache()->addImage( "GreenBug.png" );
 
+	CCTextureCache::sharedTextureCache()->addImage( "LightingEnd.png" );
+	CCTextureCache::sharedTextureCache()->addImage( "LightningSegment.png" );
+
 	/* bkg music */
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic("Zap_BackgroundMainLoop.mp3");
 }
