@@ -8,7 +8,7 @@ BugBase::BugBase( const char* spriteFileName )
 
 	m_spawnOffset = 300;
 
-	m_pSprite = cocos2d::CCSprite::create( spriteFileName, CCRectMake(0, 0, 128, 128) );
+	m_pSprite = cocos2d::CCSprite::create( spriteFileName, CCRectMake(0, 0, 64, 64) );
 
 	Spawn();
 	m_State = BugState_Alive;
@@ -118,6 +118,7 @@ void BugBase::Update( float dt )
 
 bool BugBase::CheckIfInBounds()
 {
+
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
 	int x = m_pSprite->getPositionX();

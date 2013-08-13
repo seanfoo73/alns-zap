@@ -269,14 +269,18 @@ void GameWorld::TransitionToGameOver()
 }
 
 /* function will check if the bug collides with a point then destroy the bug at the point */
+/* the collision  detection area will be a little larger than the actual bug on screen
+	 * to make it easier to click
+	 */
 void GameWorld::checkBugsCollideWithPoint( CCPoint point )
 {
 	std::vector<BugBase*>* bugs;
 	bugs = GameManager::Instance()->m_Bugs;
+	float touchLeniencyFactor = 2;//1.5;
 
 	for( int i = 0; i < bugs->size(); i++ )
 	{
-		float tarRadius = (*bugs)[i]->m_pSprite->getContentSize().width / 2;
+		float tarRadius = ( (*bugs)[i]->m_pSprite->getContentSize().width / 2 ) * touchLeniencyFactor;
 		float tarX = (*bugs)[i]->GetPositionX();
 		float tarY = (*bugs)[i]->GetPositionY();
 
