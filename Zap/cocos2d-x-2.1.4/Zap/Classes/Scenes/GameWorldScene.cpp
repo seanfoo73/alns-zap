@@ -328,7 +328,9 @@ void GameWorld::GenerateLightningPointsList( CCPoint start, CCPoint end )
 	CCPoint normal = ccpNormalize( ccp( tangent.y, -tangent.x ) );
 	float length = start.getDistance( end );
 
-	float displacement = 40.0f;
+	float prevDisplacement = 0;
+	float sway = 80;
+	float jag = 1/sway;
 
 	for( int i = 0; i < length/4; i++ )
 	{
@@ -339,6 +341,13 @@ void GameWorld::GenerateLightningPointsList( CCPoint start, CCPoint end )
 	CCPoint prevPoint = start;
 	for( int i = 1; i < 4; i++ )
 	{
+		float scale = ( length * jag ) * ( float(i)/4 - float(i-1)/4 );
+		float envelope = float(i)/4 > 0.95f ? 20 * (1 - (float(i)/4)) : 1;
+
+		float displacement = arc4random() % int(sway) - int(sway/2);
+		displacement -= (displacement - prevDisplacement) * (1 - scale);
+		displacement *= envelope;
+
 		CCPoint nextPoint = ccp ( 	start.x + float(i)/4 * tangent.x + displacement * normal.x,
 									start.y + float(i)/4 * tangent.y + displacement * normal.y );
 		DrawLightningLine( prevPoint, nextPoint, 2 );
