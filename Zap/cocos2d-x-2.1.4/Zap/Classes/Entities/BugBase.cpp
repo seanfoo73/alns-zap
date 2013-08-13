@@ -8,7 +8,10 @@ BugBase::BugBase( const char* spriteFileName )
 
 	m_spawnOffset = 300;
 
-	m_pSprite = cocos2d::CCSprite::create( spriteFileName, CCRectMake(0, 0, 64, 64) );
+	m_pSprite = cocos2d::CCSprite::createWithTexture(
+			CCTextureCache::sharedTextureCache()->addImage( spriteFileName ),
+			CCRectMake(0, 0, 64, 64) );
+	//m_pSprite = cocos2d::CCSprite::create( spriteFileName, CCRectMake(0, 0, 64, 64) );
 
 	Spawn();
 	m_State = BugState_Alive;
