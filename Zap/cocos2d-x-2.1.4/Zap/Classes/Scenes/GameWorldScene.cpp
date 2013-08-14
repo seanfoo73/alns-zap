@@ -54,7 +54,25 @@ bool GameWorld::init()
 	m_pTestLabel->setPosition( ccp( 400, 500 ) );
 	this->addChild(m_pTestLabel, 3 );
 
-	this->schedule( schedule_selector(GameWorld::update) );
+	if( m_LightningPoints )
+	{
+		for( int i = 0; i < m_LightningPoints->size(); i++ )
+		{
+			delete (*m_LightningPoints)[i];
+		}
+		m_LightningPoints->clear();
+	}
+	else
+	{
+		m_LightningPoints = new std::vector<LightningLine*>();
+		for( int i = 0; i < m_LightningPoints->size(); i++ )
+		{
+			delete (*m_LightningPoints)[i];
+		}
+		m_LightningPoints->clear();
+	}
+
+	m_LightningLastCalc = 0;
 
 	m_pLightningSegmentBatch = CCSpriteBatchNode::create( "LightningSegment.png" );
 	m_pLightningSegmentBatch->removeAllChildrenWithCleanup( true );
@@ -65,6 +83,8 @@ bool GameWorld::init()
 	this->addChild(m_pLightningEndBatch);
 
 	SimpleAudioEngine::sharedEngine()->playBackgroundMusic("Zap_BackgroundMainLoop.mp3", true );
+
+	this->schedule( schedule_selector(GameWorld::update) );
 
 	return true;
 }
@@ -139,6 +159,8 @@ void GameWorld::update(float _dt)
 	CheckBugsOutOfBounds();
 	RemoveBugsFromWorld();
 
+	m_LightningLastCalc += _dt;
+
 	m_remainingChainTime -= _dt;
 	if( m_remainingChainTime <= 0 )
 	{
@@ -146,8 +168,7 @@ void GameWorld::update(float _dt)
 	}
 
 	//sprintf( testLabelStringBuf, "Bugs Hit by Lightning: %d", GameManager::Instance()->m_BugsHitByLightning->size() );
-	//sprintf( testLabelStringBuf, "Score: %d", GameManager::Instance()->m_Score );
-	sprintf( testLabelStringBuf, "End Points: %d", endCount );
+	sprintf( testLabelStringBuf, "Score: %d", GameManager::Instance()->m_Score );
 	const char* testLabelString = &testLabelStringBuf[0];
 	m_pTestLabel->setString(testLabelString);
 }
@@ -245,39 +266,35 @@ void GameWorld::DrawLightning()
 
 	m_pLightningSegmentBatch->removeAllChildrenWithCleanup( true );
 	m_pLightningEndBatch->removeAllChildrenWithCleanup( true );
-	endCount = 0;
 
-	for( int i= 0; i < bugs->size(); i++ )
+	for( int i = 0; i < m_LightningPoints->size(); i++ )
 	{
-		//first stretch of lightning
-		if( i == 0 )
+		DrawLightningLine( (*m_LightningPoints)[i]->m_start, (*m_LightningPoints)[i]->m_end, 2 );
+	}
+
+	if( m_LightningLastCalc >= GameManager::Instance()->m_LightningRecalcInterval )
+	{
+		for( int i = 0; i < m_LightningPoints->size(); i++ )
 		{
-			/**
-			ccDrawLine( ccp( size.width/2, size.height/2 ), 		//from
-						(*bugs)[i]->m_pSprite->getPosition() );		//to
-			/**/
-			GenerateLightningPointsList( ccp( size.width/2, size.height/2 ), 			//from
-										(*bugs)[i]->m_pSprite->getPosition() ); 		//to
-			/**
-			DrawLightningLine( ccp( size.width/2, size.height/2 ), 	//from
-						(*bugs)[i]->m_pSprite->getPosition(), 		//to
-						2 );
-			/**/
+			delete (*m_LightningPoints)[i];
 		}
-		else
+
+		m_LightningPoints->clear();
+		for( int i = 0; i < bugs->size(); i++ )
 		{
-			/**
-			ccDrawLine( (*bugs)[i-1]->m_pSprite->getPosition(), 	//from
-						(*bugs)[i]->m_pSprite->getPosition() );		//to
-			/**/
-			GenerateLightningPointsList( (*bugs)[i-1]->m_pSprite->getPosition(), 		//from
-					   	   	   	   	   	   (*bugs)[i]->m_pSprite->getPosition() ); 		//to
-			/**
-			DrawLightningLine( (*bugs)[i-1]->m_pSprite->getPosition(), 		//from
-							   (*bugs)[i]->m_pSprite->getPosition(), 		//to
-							   2 );
-			/**/
+			//first stretch of lightning
+			if( i == 0 )
+			{
+				GenerateLightningPointsList( ccp( size.width/2, size.height/2 ), 			//from
+											(*bugs)[i]->m_pSprite->getPosition() ); 		//to
+			}
+			else
+			{
+				GenerateLightningPointsList( (*bugs)[i-1]->m_pSprite->getPosition(), 		//from
+											   (*bugs)[i]->m_pSprite->getPosition() ); 		//to
+			}
 		}
+		m_LightningLastCalc = 0;
 	}
 }
 
@@ -316,8 +333,6 @@ void GameWorld::DrawLightningLine( CCPoint start, CCPoint end, float thickness )
 	pEnd->setScaleY( thicknessScale );
 	pEnd->setRotation( trueRotationRad + 3.14 );
 	m_pLightningEndBatch->addChild( pEnd, 0 );
-
-	endCount += 2;
 }
 
 void GameWorld::GenerateLightningPointsList( CCPoint start, CCPoint end )
@@ -344,18 +359,19 @@ void GameWorld::GenerateLightningPointsList( CCPoint start, CCPoint end )
 		float scale = ( length * jag ) * ( float(i)/4 - float(i-1)/4 );
 		float envelope = float(i)/4 > 0.95f ? 20 * (1 - (float(i)/4)) : 1;
 
-		float displacement = arc4random() % int(sway) - int(sway/2);
+		float displacement = ( arc4random() % int(sway) ) - (sway/2);
 		displacement -= (displacement - prevDisplacement) * (1 - scale);
 		displacement *= envelope;
 
 		CCPoint nextPoint = ccp ( 	start.x + float(i)/4 * tangent.x + displacement * normal.x,
 									start.y + float(i)/4 * tangent.y + displacement * normal.y );
-		DrawLightningLine( prevPoint, nextPoint, 2 );
+
+		m_LightningPoints->push_back( new LightningLine( prevPoint, nextPoint ) );
 
 		prevPoint = nextPoint;
-		displacement = -displacement;
+		prevDisplacement = displacement;
 	}
-	DrawLightningLine( prevPoint, end, 2 );
+	m_LightningPoints->push_back( new LightningLine( prevPoint, end ) );
 }
 
 void GameWorld::UpdateGameTime( float _dt )

@@ -38,6 +38,7 @@ class BugBase
 
 		cocos2d::CCSprite* m_pSprite;
 		EBugState m_State;
+
 	private:
 		BugBase();		/* we don't want to call this until we have a solution where we do not have
 							the sprite name */

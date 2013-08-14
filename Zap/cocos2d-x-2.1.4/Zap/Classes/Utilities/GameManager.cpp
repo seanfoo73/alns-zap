@@ -42,6 +42,8 @@ void GameManager::initData()
 	m_BaseBluePoints = 10;
 	m_BaseRedPoints = 30;
 	m_BaseGreenPoints = 20;
+
+	m_LightningRecalcInterval = 0.5f;
 }
 
 void GameManager::AddBugHit( BugBase* bug )

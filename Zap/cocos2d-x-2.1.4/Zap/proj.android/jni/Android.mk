@@ -13,6 +13,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/Scenes/GameMenuScene.cpp \
                    ../../Classes/Scenes/GameOverScene.cpp \
                    ../../Classes/Utilities/GameManager.cpp \
+                   ../../Classes/Effects/LightningLine.cpp \
                    ../../Classes/Entities/BugBase.cpp \
                    ../../Classes/Entities/BlueBug.cpp \
                    ../../Classes/Entities/RedBug.cpp \

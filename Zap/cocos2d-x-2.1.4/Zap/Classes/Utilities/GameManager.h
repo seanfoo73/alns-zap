@@ -40,6 +40,8 @@ class GameManager
 		int m_BugsDeleted;
 		int m_NumReachedOutOfBounds;
 
+		float m_LightningRecalcInterval;
+
 		virtual bool init();
 		virtual void initData();
 

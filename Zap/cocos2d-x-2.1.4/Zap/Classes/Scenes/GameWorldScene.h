@@ -3,6 +3,9 @@
 
 #include "cocos2d.h"
 #include "../Entities/BugBase.h"
+
+#include "../Effects/LightningLine.h"
+
 #include <vector>
 
 class GameWorld : public cocos2d::CCLayer
@@ -55,10 +58,11 @@ class GameWorld : public cocos2d::CCLayer
 		float m_remainingGameTime;
 		float m_remainingChainTime;
 
-		int endCount;
-
 		cocos2d::CCSpriteBatchNode* m_pLightningSegmentBatch;
 		cocos2d::CCSpriteBatchNode* m_pLightningEndBatch;
+
+		std::vector<LightningLine*>* m_LightningPoints;
+		float m_LightningLastCalc;
 };
 
 #endif /* __GAMEWORLD_SCENE_H__ */
