@@ -299,6 +299,7 @@
 		DBBF4A1717DAA766000E5CF3 /* LightningLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBBF4A1517DAA766000E5CF3 /* LightningLine.cpp */; };
 		DBBF4A1917DAA814000E5CF3 /* LightningEnd.png in Resources */ = {isa = PBXBuildFile; fileRef = DBBF4A1817DAA814000E5CF3 /* LightningEnd.png */; };
 		DBBF4A1B17DAA82D000E5CF3 /* LightningSegment.png in Resources */ = {isa = PBXBuildFile; fileRef = DBBF4A1A17DAA82D000E5CF3 /* LightningSegment.png */; };
+		DBBF4A1D17DAB018000E5CF3 /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = DBBF4A1C17DAB018000E5CF3 /* Background.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -921,6 +922,7 @@
 		DBBF4A1617DAA766000E5CF3 /* LightningLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightningLine.h; sourceTree = "<group>"; };
 		DBBF4A1817DAA814000E5CF3 /* LightningEnd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LightningEnd.png; path = "../../Zap/cocos2d-x-2.1.4/Zap/Resources/LightningEnd.png"; sourceTree = "<group>"; };
 		DBBF4A1A17DAA82D000E5CF3 /* LightningSegment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LightningSegment.png; path = "../../Zap/cocos2d-x-2.1.4/Zap/Resources/LightningSegment.png"; sourceTree = "<group>"; };
+		DBBF4A1C17DAB018000E5CF3 /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Background.png; path = "../../Zap/cocos2d-x-2.1.4/Zap/Resources/Background.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -992,6 +994,7 @@
 		DB4E318D17B8FAC8006859AC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DBBF4A1C17DAB018000E5CF3 /* Background.png */,
 				DBBF4A1A17DAA82D000E5CF3 /* LightningSegment.png */,
 				DBBF4A1817DAA814000E5CF3 /* LightningEnd.png */,
 				DB4E358517B9A789006859AC /* Zap_BackgroundMainLoop.mp3 */,
@@ -2283,6 +2286,7 @@
 				DB4E358617B9A789006859AC /* Zap_BackgroundMainLoop.mp3 in Resources */,
 				DBBF4A1917DAA814000E5CF3 /* LightningEnd.png in Resources */,
 				DBBF4A1B17DAA82D000E5CF3 /* LightningSegment.png in Resources */,
+				DBBF4A1D17DAB018000E5CF3 /* Background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
