@@ -296,6 +296,9 @@
 		DB4E357F17B8FF89006859AC /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4E357917B8FF89006859AC /* HelloWorld.png */; };
 		DB4E358017B8FF89006859AC /* RedBug.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4E357A17B8FF89006859AC /* RedBug.png */; };
 		DB4E358617B9A789006859AC /* Zap_BackgroundMainLoop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB4E358517B9A789006859AC /* Zap_BackgroundMainLoop.mp3 */; };
+		DBBF4A1717DAA766000E5CF3 /* LightningLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBBF4A1517DAA766000E5CF3 /* LightningLine.cpp */; };
+		DBBF4A1917DAA814000E5CF3 /* LightningEnd.png in Resources */ = {isa = PBXBuildFile; fileRef = DBBF4A1817DAA814000E5CF3 /* LightningEnd.png */; };
+		DBBF4A1B17DAA82D000E5CF3 /* LightningSegment.png in Resources */ = {isa = PBXBuildFile; fileRef = DBBF4A1A17DAA82D000E5CF3 /* LightningSegment.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -914,6 +917,10 @@
 		DB4E357917B8FF89006859AC /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = HelloWorld.png; path = "../../Zap/cocos2d-x-2.1.4/Zap/Resources/HelloWorld.png"; sourceTree = "<group>"; };
 		DB4E357A17B8FF89006859AC /* RedBug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RedBug.png; path = "../../Zap/cocos2d-x-2.1.4/Zap/Resources/RedBug.png"; sourceTree = "<group>"; };
 		DB4E358517B9A789006859AC /* Zap_BackgroundMainLoop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Zap_BackgroundMainLoop.mp3; path = "../../Zap/cocos2d-x-2.1.4/Zap/Resources/Zap_BackgroundMainLoop.mp3"; sourceTree = "<group>"; };
+		DBBF4A1517DAA766000E5CF3 /* LightningLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LightningLine.cpp; sourceTree = "<group>"; };
+		DBBF4A1617DAA766000E5CF3 /* LightningLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightningLine.h; sourceTree = "<group>"; };
+		DBBF4A1817DAA814000E5CF3 /* LightningEnd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LightningEnd.png; path = "../../Zap/cocos2d-x-2.1.4/Zap/Resources/LightningEnd.png"; sourceTree = "<group>"; };
+		DBBF4A1A17DAA82D000E5CF3 /* LightningSegment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LightningSegment.png; path = "../../Zap/cocos2d-x-2.1.4/Zap/Resources/LightningSegment.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -985,6 +992,8 @@
 		DB4E318D17B8FAC8006859AC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DBBF4A1A17DAA82D000E5CF3 /* LightningSegment.png */,
+				DBBF4A1817DAA814000E5CF3 /* LightningEnd.png */,
 				DB4E358517B9A789006859AC /* Zap_BackgroundMainLoop.mp3 */,
 				DB4E357517B8FF89006859AC /* BlueBug.png */,
 				DB4E357617B8FF89006859AC /* CloseNormal.png */,
@@ -2141,6 +2150,9 @@
 		DB4E355017B8FF4D006859AC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				DBBF4A1417DAA766000E5CF3 /* Effects */,
+				DB4E356017B8FF4D006859AC /* Scenes */,
+				DB4E356717B8FF4D006859AC /* Utilities */,
 				DB4E355317B8FF4D006859AC /* Entities */,
 				DB4E355117B8FF4D006859AC /* AppDelegate.cpp */,
 				DB4E355217B8FF4D006859AC /* AppDelegate.h */,
@@ -2164,7 +2176,6 @@
 				DB4E355B17B8FF4D006859AC /* Lantern.h */,
 				DB4E355C17B8FF4D006859AC /* RedBug.cpp */,
 				DB4E355D17B8FF4D006859AC /* RedBug.h */,
-				DB4E356017B8FF4D006859AC /* Scenes */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -2178,10 +2189,8 @@
 				DB4E356417B8FF4D006859AC /* GameOverScene.h */,
 				DB4E356517B8FF4D006859AC /* GameWorldScene.cpp */,
 				DB4E356617B8FF4D006859AC /* GameWorldScene.h */,
-				DB4E356717B8FF4D006859AC /* Utilities */,
 			);
-			name = Scenes;
-			path = ../Scenes;
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 		DB4E356717B8FF4D006859AC /* Utilities */ = {
@@ -2190,8 +2199,16 @@
 				DB4E356817B8FF4D006859AC /* GameManager.cpp */,
 				DB4E356917B8FF4D006859AC /* GameManager.h */,
 			);
-			name = Utilities;
-			path = ../Utilities;
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		DBBF4A1417DAA766000E5CF3 /* Effects */ = {
+			isa = PBXGroup;
+			children = (
+				DBBF4A1517DAA766000E5CF3 /* LightningLine.cpp */,
+				DBBF4A1617DAA766000E5CF3 /* LightningLine.h */,
+			);
+			path = Effects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2264,6 +2281,8 @@
 				DB4E357F17B8FF89006859AC /* HelloWorld.png in Resources */,
 				DB4E358017B8FF89006859AC /* RedBug.png in Resources */,
 				DB4E358617B9A789006859AC /* Zap_BackgroundMainLoop.mp3 in Resources */,
+				DBBF4A1917DAA814000E5CF3 /* LightningEnd.png in Resources */,
+				DBBF4A1B17DAA82D000E5CF3 /* LightningSegment.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2532,6 +2551,7 @@
 				DB4E357217B8FF4D006859AC /* GameOverScene.cpp in Sources */,
 				DB4E357317B8FF4D006859AC /* GameWorldScene.cpp in Sources */,
 				DB4E357417B8FF4D006859AC /* GameManager.cpp in Sources */,
+				DBBF4A1717DAA766000E5CF3 /* LightningLine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
