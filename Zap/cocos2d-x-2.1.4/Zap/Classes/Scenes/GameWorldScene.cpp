@@ -28,6 +28,11 @@ bool GameWorld::init()
 	m_remainingGameTime = GameManager::Instance()->m_GameDuration;
 	GameManager::Instance()->m_Score = 0;
 
+	m_pBackground = CCSprite::create("Background.png", CCRectMake( 0, 0, 1280, 720 ) );
+	m_pBackground->setPosition( ccp( 	CCDirector::sharedDirector()->getWinSize().width/2,
+										CCDirector::sharedDirector()->getWinSize().height/2 ));
+	this->addChild( m_pBackground, 1 );
+
 	CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
 										"CloseNormal.png",
 										"CloseSelected.png",
@@ -37,22 +42,22 @@ bool GameWorld::init()
 
 	CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
 	pMenu->setPosition( CCPointZero );
-	this->addChild(pMenu, 1);
+	this->addChild(pMenu, 2 );
 
 	CCLabelTTF* pLabel = CCLabelTTF::create("Zap", "Thonburi", 34);
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 	pLabel->setPosition( ccp( size.width / 2, size.height - 20 ) );
-	this->addChild(pLabel, 1);
+	this->addChild(pLabel, 3 );
 
 	sprintf(timeLeftStringBuf, "%1.1f", m_remainingGameTime);
 	const char* timeLeftString = timeLeftStringBuf;
 	m_pTimeLeftLabel = CCLabelTTF::create( timeLeftString, "Thonburi", 108);
 	m_pTimeLeftLabel->setPosition( ccp( size.width / 2, size.height / 2 ) );
-	this->addChild(m_pTimeLeftLabel, 2);
+	this->addChild(m_pTimeLeftLabel, 4 );
 
 	m_pTestLabel = CCLabelTTF::create( "test", "Thonburi", 32 );
 	m_pTestLabel->setPosition( ccp( 400, 500 ) );
-	this->addChild(m_pTestLabel, 3 );
+	this->addChild(m_pTestLabel, 5 );
 
 	if( m_LightningPoints )
 	{
@@ -76,11 +81,11 @@ bool GameWorld::init()
 
 	m_pLightningSegmentBatch = CCSpriteBatchNode::create( "LightningSegment.png" );
 	m_pLightningSegmentBatch->removeAllChildrenWithCleanup( true );
-	this->addChild(m_pLightningSegmentBatch);
+	this->addChild(m_pLightningSegmentBatch, 7);
 
 	m_pLightningEndBatch = CCSpriteBatchNode::create( "LightningEnd.png" );
 	m_pLightningEndBatch->removeAllChildrenWithCleanup( true );
-	this->addChild(m_pLightningEndBatch);
+	this->addChild(m_pLightningEndBatch, 7);
 
 	SimpleAudioEngine::sharedEngine()->playBackgroundMusic("Zap_BackgroundMainLoop.mp3", true );
 
@@ -118,19 +123,19 @@ void GameWorld::spawnBug()
 	if( bugType == 0 )
 	{
 		BugBase* blue = new BlueBug( "BlueBug.png" );
-		this->addChild(blue->m_pSprite);
+		this->addChild(blue->m_pSprite, 6);
 		GameManager::Instance()->m_Bugs->push_back(blue);
 	}
 	else if( bugType == 1 )
 	{
 		BugBase* red = new RedBug( "RedBug.png" );
-		this->addChild(red->m_pSprite);
+		this->addChild(red->m_pSprite, 6);
 		GameManager::Instance()->m_Bugs->push_back(red);
 	}
 	else if( bugType == 2 )
 	{
 		BugBase* green = new GreenBug( "GreenBug.png" );
-		this->addChild(green->m_pSprite);
+		this->addChild(green->m_pSprite, 6);
 		GameManager::Instance()->m_Bugs->push_back(green);
 	}
 }

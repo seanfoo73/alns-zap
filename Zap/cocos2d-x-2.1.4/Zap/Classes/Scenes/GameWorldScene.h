@@ -61,6 +61,8 @@ class GameWorld : public cocos2d::CCLayer
 		cocos2d::CCSpriteBatchNode* m_pLightningSegmentBatch;
 		cocos2d::CCSpriteBatchNode* m_pLightningEndBatch;
 
+		cocos2d::CCSprite* m_pBackground;
+
 		std::vector<LightningLine*>* m_LightningPoints;
 		float m_LightningLastCalc;
 };
