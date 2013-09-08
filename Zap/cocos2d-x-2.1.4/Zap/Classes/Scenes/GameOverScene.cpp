@@ -34,7 +34,7 @@ bool GameOver::init()
 	pMenu->setPosition( CCPointZero );
 	this->addChild(pMenu, 1);
 
-	CCLabelTTF* pLabel = CCLabelTTF::create("Game Over", "Thonburi", 34);
+	CCLabelTTF* pLabel = CCLabelTTF::create("Game Over", "fonts/Roboto-Regular.ttf", 34);
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 	pLabel->setPosition( ccp( size.width / 2, size.height - 20 ) );
 	this->addChild(pLabel, 1);
@@ -54,7 +54,7 @@ void GameOver::createMenu()
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
 	CCMenuItemFont::setFontSize( 108 );
-	CCMenuItemFont::setFontName( "Thonburi" );
+	CCMenuItemFont::setFontName( "fonts/Roboto-Regular.ttf" );
 
 	CCMenuItemFont* pRestartButton = CCMenuItemFont::create(
 										"Restart",

@@ -37,7 +37,7 @@ bool GameMenu::init()
 	this->addChild(pMenu, 1);
 
 	/* this is the header at the top of the screen */
-	CCLabelTTF* pLabel = CCLabelTTF::create("Menu", "Thonburi", 34);
+	CCLabelTTF* pLabel = CCLabelTTF::create("Menu", "fonts/Roboto-Regular.ttf", 34);
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 	pLabel->setPosition( ccp( size.width / 2, size.height - 20 ) );
 	this->addChild(pLabel, 1);
@@ -53,7 +53,7 @@ void GameMenu::createMenu()
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
 	CCMenuItemFont::setFontSize( 108 );
-	CCMenuItemFont::setFontName( "Thonburi" );
+	CCMenuItemFont::setFontName( "fonts/Roboto-Regular.ttf" );
 
 	CCMenuItemFont* pStartButton = CCMenuItemFont::create(
 										"Start Game",
@@ -61,7 +61,7 @@ void GameMenu::createMenu()
 										menu_selector(GameMenu::menuStartGameCallback) );
 	pStartButton->setPosition( ccp( 0, 0 ) );
 	//pStartButton->setFontSize( 108 );
-	//pStartButton->setFontName( "Thonburi" );
+	//pStartButton->setFontName( "fonts/Roboto-Regular.ttf" );
 
 	CCMenuItemFont* pExitButton = CCMenuItemFont::create(
 										"Exit",
@@ -69,7 +69,7 @@ void GameMenu::createMenu()
 										menu_selector(GameMenu::menuExitGameCallback) );
 	pExitButton->setPosition( ccp( 0, 0 ) );
 	//pExitButton->setFontSize( 108 );
-	//pExitButton->setFontName( "Thonburi" );
+	//pExitButton->setFontName( "fonts/Roboto-Regular.ttf" );
 
 	pGameMenu = CCMenu::create(pStartButton, pExitButton, NULL);
 	pGameMenu->alignItemsVertically();
