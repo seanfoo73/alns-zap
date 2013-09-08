@@ -49,11 +49,19 @@ bool GameWorld::init()
 	pLabel->setPosition( ccp( size.width / 2, size.height - 20 ) );
 	this->addChild(pLabel, 3 );
 
-	sprintf(timeLeftStringBuf, "%1.1f", m_remainingGameTime);
+	sprintf(timeLeftStringBuf, "Time: %1.1f", m_remainingGameTime);
 	const char* timeLeftString = timeLeftStringBuf;
-	m_pTimeLeftLabel = CCLabelTTF::create( timeLeftString, "Thonburi", 108);
-	m_pTimeLeftLabel->setPosition( ccp( size.width / 2, size.height / 2 ) );
+	m_pTimeLeftLabel = CCLabelTTF::create( timeLeftString, "Thonburi", 32);
+	m_pTimeLeftLabel->setPosition( ccp( size.width - 176 , size.height - 32 ) );
+	m_pTimeLeftLabel->setAnchorPoint( ccp( 0, 0.5f ) ); //aligned left
 	this->addChild(m_pTimeLeftLabel, 4 );
+
+	sprintf(scoreStringBuf, "Score: %d", GameManager::Instance()->m_Score);
+	const char* scoreString = scoreStringBuf;
+	m_pScoreLabel = CCLabelTTF::create( scoreString, "Thonburi", 32);
+	m_pScoreLabel->setPosition( ccp( 32, size.height - 32 ) );
+	m_pScoreLabel->setAnchorPoint( ccp( 0, 0.5f ) ); //aligned left
+	this->addChild(m_pScoreLabel, 4 );
 
 	m_pTestLabel = CCLabelTTF::create( "test", "Thonburi", 32 );
 	m_pTestLabel->setPosition( ccp( 400, 500 ) );
@@ -173,7 +181,7 @@ void GameWorld::update(float _dt)
 	}
 
 	//sprintf( testLabelStringBuf, "Bugs Hit by Lightning: %d", GameManager::Instance()->m_BugsHitByLightning->size() );
-	sprintf( testLabelStringBuf, "Score: %d", GameManager::Instance()->m_Score );
+	sprintf( testLabelStringBuf, " " );
 	const char* testLabelString = &testLabelStringBuf[0];
 	m_pTestLabel->setString(testLabelString);
 }
@@ -183,15 +191,19 @@ void GameWorld::UpdateGUI()
 	/* This is to make sure we don't get "negative times" to display in the countdown */
 	if( m_remainingGameTime < 0 )
 	{
-		sprintf(timeLeftStringBuf, "%1.1f", 0.0f);
+		sprintf(timeLeftStringBuf, "Time: %1.1f", 0.0f);
 	}
 	else
 	{
-		sprintf(timeLeftStringBuf, "%1.1f", m_remainingGameTime);
+		sprintf(timeLeftStringBuf, "Time: %1.1f", m_remainingGameTime);
 	}
+	sprintf(scoreStringBuf, "Score: %d", GameManager::Instance()->m_Score);
 
 	const char* timeLeftString = timeLeftStringBuf;
 	m_pTimeLeftLabel->setString( timeLeftString );
+
+	const char* scoreString = scoreStringBuf;
+	m_pScoreLabel->setString( scoreString );
 }
 
 void GameWorld::CheckBugsOutOfBounds()

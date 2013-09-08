@@ -49,6 +49,9 @@ class GameWorld : public cocos2d::CCLayer
 		cocos2d::CCLabelTTF* m_pTimeLeftLabel;
 		char timeLeftStringBuf[16];
 
+		cocos2d::CCLabelTTF* m_pScoreLabel;
+		char scoreStringBuf[16];
+
 		char testLabelStringBuf[64];
 		cocos2d::CCLabelTTF* m_pTestLabel;
 
