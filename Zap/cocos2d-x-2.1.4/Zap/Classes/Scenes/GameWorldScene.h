@@ -67,6 +67,7 @@ private:
 	cocos2d::CCSpriteBatchNode* m_pLightningEndBatch;
 
 	cocos2d::CCSprite* m_pBackground;
+	cocos2d::CCSprite* m_pLantern;
 
 	std::vector<LightningLine*>* m_LightningPoints;
 	float m_LightningLastCalc;

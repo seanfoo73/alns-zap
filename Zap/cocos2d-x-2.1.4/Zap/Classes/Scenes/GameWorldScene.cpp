@@ -33,6 +33,11 @@ bool GameWorld::init()
 										CCDirector::sharedDirector()->getWinSize().height/2 ));
 	this->addChild( m_pBackground, 1 );
 
+	m_pLantern = CCSprite::create("Lantern.png", CCRectMake( 0, 0, 128, 128 ) );
+	m_pLantern->setPosition( ccp(		CCDirector::sharedDirector()->getWinSize().width/2,
+										CCDirector::sharedDirector()->getWinSize().height/2 ));
+	this->addChild( m_pLantern, 2 );
+
 	CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
 										"CloseNormal.png",
 										"CloseSelected.png",
@@ -42,30 +47,30 @@ bool GameWorld::init()
 
 	CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
 	pMenu->setPosition( CCPointZero );
-	this->addChild(pMenu, 2 );
+	this->addChild(pMenu, 3 );
 
 	CCLabelTTF* pLabel = CCLabelTTF::create("Zap", "fonts/Roboto-Regular.ttf", 34);
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 	pLabel->setPosition( ccp( size.width / 2, size.height - 20 ) );
-	this->addChild(pLabel, 3 );
+	this->addChild(pLabel, 4 );
 
 	sprintf(timeLeftStringBuf, "Time: %1.1f", m_remainingGameTime);
 	const char* timeLeftString = timeLeftStringBuf;
 	m_pTimeLeftLabel = CCLabelTTF::create( timeLeftString, "fonts/Roboto-Regular.ttf", 32);
 	m_pTimeLeftLabel->setPosition( ccp( size.width - 176 , size.height - 32 ) );
 	m_pTimeLeftLabel->setAnchorPoint( ccp( 0, 0.5f ) ); //aligned left
-	this->addChild(m_pTimeLeftLabel, 4 );
+	this->addChild(m_pTimeLeftLabel, 5 );
 
 	sprintf(scoreStringBuf, "Score: %d", GameManager::Instance()->m_Score);
 	const char* scoreString = scoreStringBuf;
 	m_pScoreLabel = CCLabelTTF::create( scoreString, "fonts/Roboto-Regular.ttf", 32);
 	m_pScoreLabel->setPosition( ccp( 32, size.height - 32 ) );
 	m_pScoreLabel->setAnchorPoint( ccp( 0, 0.5f ) ); //aligned left
-	this->addChild(m_pScoreLabel, 4 );
+	this->addChild(m_pScoreLabel, 5 );
 
 	m_pTestLabel = CCLabelTTF::create( "test", "fonts/Roboto-Regular.ttf", 32 );
 	m_pTestLabel->setPosition( ccp( 400, 500 ) );
-	this->addChild(m_pTestLabel, 5 );
+	this->addChild(m_pTestLabel, 6 );
 
 	if( m_LightningPoints )
 	{
@@ -89,11 +94,11 @@ bool GameWorld::init()
 
 	m_pLightningSegmentBatch = CCSpriteBatchNode::create( "LightningSegment.png" );
 	m_pLightningSegmentBatch->removeAllChildrenWithCleanup( true );
-	this->addChild(m_pLightningSegmentBatch, 7);
+	this->addChild(m_pLightningSegmentBatch, 8);
 
 	m_pLightningEndBatch = CCSpriteBatchNode::create( "LightningEnd.png" );
 	m_pLightningEndBatch->removeAllChildrenWithCleanup( true );
-	this->addChild(m_pLightningEndBatch, 7);
+	this->addChild(m_pLightningEndBatch, 8);
 
 	SimpleAudioEngine::sharedEngine()->playBackgroundMusic("Zap_BackgroundMainLoop.mp3", true );
 
@@ -131,19 +136,19 @@ void GameWorld::spawnBug()
 	if( bugType == 0 )
 	{
 		BugBase* blue = new BlueBug( "BlueBug.png" );
-		this->addChild(blue->m_pSprite, 6);
+		this->addChild(blue->m_pSprite, 7);
 		GameManager::Instance()->m_Bugs->push_back(blue);
 	}
 	else if( bugType == 1 )
 	{
 		BugBase* red = new RedBug( "RedBug.png" );
-		this->addChild(red->m_pSprite, 6);
+		this->addChild(red->m_pSprite, 7);
 		GameManager::Instance()->m_Bugs->push_back(red);
 	}
 	else if( bugType == 2 )
 	{
 		BugBase* green = new GreenBug( "GreenBug.png" );
-		this->addChild(green->m_pSprite, 6);
+		this->addChild(green->m_pSprite, 7);
 		GameManager::Instance()->m_Bugs->push_back(green);
 	}
 }
