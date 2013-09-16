@@ -291,7 +291,7 @@ void GameWorld::DrawLightning()
 
 	for( int i = 0; i < m_LightningPoints->size(); i++ )
 	{
-		DrawLightningLine( (*m_LightningPoints)[i]->m_start, (*m_LightningPoints)[i]->m_end, 2 );
+		DrawLightningLine( (*m_LightningPoints)[i]->m_start, (*m_LightningPoints)[i]->m_end, 40 );
 	}
 
 	if( m_LightningLastCalc >= GameManager::Instance()->m_LightningRecalcInterval )
@@ -322,7 +322,7 @@ void GameWorld::DrawLightning()
 
 void GameWorld::DrawLightningLine( CCPoint start, CCPoint end, float thickness )
 {
-	const float ImageThickness = 8;
+	const float ImageThickness = 40;
 	float thicknessScale = thickness / ImageThickness;
 
 	CCPoint tangent = ccp( end.x - start.x, end.y - start.y );
@@ -366,27 +366,35 @@ void GameWorld::GenerateLightningPointsList( CCPoint start, CCPoint end )
 	float length = start.getDistance( end );
 
 	float prevDisplacement = 0;
-	float sway = 80;
+	float sway = 160;
 	float jag = 1/sway;
 
-	for( int i = 0; i < length/4; i++ )
+	int segments = 8;//length/80;
+	for( int i = 0; i < segments; i++ )
 	{
-		positions.push_back( ( arc4random() % 100 ) / 100 );
+		positions.push_back( float( arc4random() % 100 ) / 100.0 );
 	}
 	std::sort (positions.begin(), positions.end() );
 
-	CCPoint prevPoint = start;
-	for( int i = 1; i < 4; i++ )
+	CCLOG("Start -----------------------------");
+	for( int i = 0; i < positions.size(); i++ )
 	{
-		float scale = ( length * jag ) * ( float(i)/4 - float(i-1)/4 );
-		float envelope = float(i)/4 > 0.95f ? 20 * (1 - (float(i)/4)) : 1;
+		CCLOG("%d: %f ", i, positions[i]);
+	}
+	CCLOG("End -------------------------------");
+
+	CCPoint prevPoint = start;
+	for( int i = 1; i < segments; i++ )
+	{
+		float scale = ( length * jag ) * ( positions[i] - positions[i-1] );
+		float envelope = positions[i] > 0.95f ? 20 * (1 - (positions[i])) : 1;
 
 		float displacement = ( arc4random() % int(sway) ) - (sway/2);
 		displacement -= (displacement - prevDisplacement) * (1 - scale);
 		displacement *= envelope;
 
-		CCPoint nextPoint = ccp ( 	start.x + float(i)/4 * tangent.x + displacement * normal.x,
-									start.y + float(i)/4 * tangent.y + displacement * normal.y );
+		CCPoint nextPoint = ccp ( 	start.x + positions[i] * tangent.x + displacement * normal.x,
+									start.y + positions[i] * tangent.y + displacement * normal.y );
 
 		m_LightningPoints->push_back( new LightningLine( prevPoint, nextPoint ) );
 
