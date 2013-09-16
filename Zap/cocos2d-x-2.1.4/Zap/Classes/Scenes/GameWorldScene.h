@@ -30,7 +30,7 @@ public:
 	void DrawLightningLine(cocos2d::CCPoint start, cocos2d::CCPoint end,
 			float thickness);
 	void GenerateLightningPointsList(cocos2d::CCPoint start,
-			cocos2d::CCPoint end);
+			cocos2d::CCPoint end, int segment);
 
 	bool IsGameOver();
 	void TransitionToGameOver();
