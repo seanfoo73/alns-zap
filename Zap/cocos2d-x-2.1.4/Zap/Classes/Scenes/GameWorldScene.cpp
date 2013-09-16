@@ -33,7 +33,7 @@ bool GameWorld::init()
 										CCDirector::sharedDirector()->getWinSize().height/2 ));
 	this->addChild( m_pBackground, 1 );
 
-	m_pLantern = CCSprite::create("Lantern.png", CCRectMake( 0, 0, 128, 128 ) );
+	m_pLantern = CCSprite::create("Lantern.png", CCRectMake( 0, 0, 177, 177 ) );
 	m_pLantern->setPosition( ccp(		CCDirector::sharedDirector()->getWinSize().width/2,
 										CCDirector::sharedDirector()->getWinSize().height/2 ));
 	this->addChild( m_pLantern, 2 );
