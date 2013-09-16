@@ -324,6 +324,7 @@
 		DBFEF52817DC13A30052D6FD /* RobotoCondensed-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DBFEF51017DC13A30052D6FD /* RobotoCondensed-LightItalic.ttf */; };
 		DBFEF52917DC13A30052D6FD /* RobotoCondensed-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DBFEF51117DC13A30052D6FD /* RobotoCondensed-Regular.ttf */; };
 		DBFEF52A17DC13A30052D6FD /* RobotoSpecimenBook.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DBFEF51217DC13A30052D6FD /* RobotoSpecimenBook.pdf */; };
+		DBFEF52C17E6A5E30052D6FD /* Lantern.png in Resources */ = {isa = PBXBuildFile; fileRef = DBFEF52B17E6A5E30052D6FD /* Lantern.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -971,6 +972,7 @@
 		DBFEF51017DC13A30052D6FD /* RobotoCondensed-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-LightItalic.ttf"; sourceTree = "<group>"; };
 		DBFEF51117DC13A30052D6FD /* RobotoCondensed-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-Regular.ttf"; sourceTree = "<group>"; };
 		DBFEF51217DC13A30052D6FD /* RobotoSpecimenBook.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = RobotoSpecimenBook.pdf; sourceTree = "<group>"; };
+		DBFEF52B17E6A5E30052D6FD /* Lantern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Lantern.png; path = "../../Zap/cocos2d-x-2.1.4/Zap/Resources/Lantern.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1044,6 +1046,7 @@
 			children = (
 				DBFEF4FA17DC13A30052D6FD /* fonts */,
 				DBBF4A1C17DAB018000E5CF3 /* Background.png */,
+				DBFEF52B17E6A5E30052D6FD /* Lantern.png */,
 				DBBF4A1A17DAA82D000E5CF3 /* LightningSegment.png */,
 				DBBF4A1817DAA814000E5CF3 /* LightningEnd.png */,
 				DB4E358517B9A789006859AC /* Zap_BackgroundMainLoop.mp3 */,
@@ -2392,6 +2395,7 @@
 				DBFEF52817DC13A30052D6FD /* RobotoCondensed-LightItalic.ttf in Resources */,
 				DBFEF52917DC13A30052D6FD /* RobotoCondensed-Regular.ttf in Resources */,
 				DBFEF52A17DC13A30052D6FD /* RobotoSpecimenBook.pdf in Resources */,
+				DBFEF52C17E6A5E30052D6FD /* Lantern.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
