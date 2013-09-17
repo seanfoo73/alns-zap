@@ -183,6 +183,7 @@ void GameWorld::update(float _dt)
 	if( m_remainingChainTime <= 0 )
 	{
 		//GameManager::Instance()->DestroyChain();
+		//DrawLightning();
 	}
 
 	//sprintf( testLabelStringBuf, "Bugs Hit by Lightning: %d", GameManager::Instance()->m_BugsHitByLightning->size() );
@@ -236,6 +237,7 @@ void GameWorld::CheckChainLength()
 			GameManager::Instance()->m_MaxBlueChainLength )
 		{
 			GameManager::Instance()->DestroyChain();
+			DrawLightning();
 		}
 	}
 	else if( GameManager::Instance()->m_CurrentChainType == GameManager::BugType_Red )
@@ -244,6 +246,7 @@ void GameWorld::CheckChainLength()
 			GameManager::Instance()->m_MaxRedChainLength )
 		{
 			GameManager::Instance()->DestroyChain();
+			DrawLightning();
 		}
 	}
 	else if( GameManager::Instance()->m_CurrentChainType == GameManager::BugType_Green )
@@ -252,6 +255,7 @@ void GameWorld::CheckChainLength()
 			GameManager::Instance()->m_MaxGreenChainLength )
 		{
 			GameManager::Instance()->DestroyChain();
+			DrawLightning();
 		}
 	}
 }
@@ -278,7 +282,7 @@ void GameWorld::draw()
 	DrawLightning();
 }
 
-void GameWorld::DrawLightning()
+void GameWorld::DrawLightning(bool forceRecalc)
 {
 	std::vector<BugBase*>* bugs;
 	bugs = GameManager::Instance()->m_BugsHitByLightning;
@@ -296,7 +300,7 @@ void GameWorld::DrawLightning()
 							(*m_LightningPoints)[i]->m_thickness );
 	}
 
-	if( m_LightningLastCalc >= GameManager::Instance()->m_LightningRecalcInterval )
+	if( m_LightningLastCalc >= GameManager::Instance()->m_LightningRecalcInterval || forceRecalc)
 	{
 		for( int i = 0; i < m_LightningPoints->size(); i++ )
 		{
@@ -424,6 +428,9 @@ bool GameWorld::IsGameOver()
 
 void GameWorld::TransitionToGameOver()
 {
+	GameManager::Instance()->DestroyChain();
+	DrawLightning();
+
 	CCScene* pScene = GameOver::scene();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create( 0.5, pScene));
 }

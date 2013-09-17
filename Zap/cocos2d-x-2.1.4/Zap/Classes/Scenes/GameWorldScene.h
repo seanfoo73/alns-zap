@@ -24,7 +24,7 @@ public:
 	void RemoveBugsFromWorld();
 
 	virtual void draw();
-	void DrawLightning();
+	void DrawLightning(bool forceRecalc=false);
 
 	/* Lightning Draw calls, perhaps move this to its own class? */
 	void DrawLightningLine(cocos2d::CCPoint start, cocos2d::CCPoint end,
