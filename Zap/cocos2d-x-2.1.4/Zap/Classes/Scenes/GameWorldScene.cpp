@@ -443,6 +443,7 @@ void GameWorld::checkBugsCollideWithPoint( CCPoint point )
 {
 	std::vector<BugBase*>* bugs;
 	std::vector<int> bugsHitLocation;
+	bool bugAdded = false;
 	bugs = GameManager::Instance()->m_Bugs;
 	float touchLeniencyFactor = 3;
 
@@ -462,21 +463,7 @@ void GameWorld::checkBugsCollideWithPoint( CCPoint point )
 	}
 
 	/* choose the bug we want if we hit multiple bugs on accident */
-	if( bugsHitLocation.size() == 1 )
-	{
-		(*bugs)[bugsHitLocation[0]]->SetBugState(BugBase::BugState_Shocked);
-		GameManager::Instance()->m_BugsHitByLightning->push_back( (*bugs)[bugsHitLocation[0]] );
-		GameManager::Instance()->AddBugHit( (*bugs)[bugsHitLocation[0]] );
-
-		bugs->erase( bugs->begin()+bugsHitLocation[0] );
-		this->CheckChainLength();
-
-		if( GameManager::Instance()->m_BugsHitByLightning->size() > 0 )
-		{
-			m_remainingChainTime = GameManager::Instance()->m_MaxNextBugTime;
-		}
-	}
-	else
+	if( bugsHitLocation.size() > 1 )
 	{
 		for( int i = 0; i < bugsHitLocation.size(); i++ )
 		{
@@ -496,7 +483,26 @@ void GameWorld::checkBugsCollideWithPoint( CCPoint point )
 				{
 					m_remainingChainTime = GameManager::Instance()->m_MaxNextBugTime;
 				}
+
+				bugAdded = true;
+				break;
 			}
+		}
+	}
+
+	/* if we haven't added a bug to the hit list and we have hit a bug */
+	if( !bugAdded && bugsHitLocation.size() >= 1 )
+	{
+		(*bugs)[bugsHitLocation[0]]->SetBugState(BugBase::BugState_Shocked);
+		GameManager::Instance()->m_BugsHitByLightning->push_back( (*bugs)[bugsHitLocation[0]] );
+		GameManager::Instance()->AddBugHit( (*bugs)[bugsHitLocation[0]] );
+
+		bugs->erase( bugs->begin()+bugsHitLocation[0] );
+		this->CheckChainLength();
+
+		if( GameManager::Instance()->m_BugsHitByLightning->size() > 0 )
+		{
+			m_remainingChainTime = GameManager::Instance()->m_MaxNextBugTime;
 		}
 	}
 }
