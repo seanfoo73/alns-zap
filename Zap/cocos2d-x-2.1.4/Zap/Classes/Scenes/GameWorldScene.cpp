@@ -183,7 +183,7 @@ void GameWorld::update(float _dt)
 	if( m_remainingChainTime <= 0 )
 	{
 		//GameManager::Instance()->DestroyChain();
-		//DrawLightning();
+		//DrawLightning( true );
 	}
 
 	//sprintf( testLabelStringBuf, "Bugs Hit by Lightning: %d", GameManager::Instance()->m_BugsHitByLightning->size() );
@@ -237,7 +237,7 @@ void GameWorld::CheckChainLength()
 			GameManager::Instance()->m_MaxBlueChainLength )
 		{
 			GameManager::Instance()->DestroyChain();
-			DrawLightning();
+			DrawLightning( true );
 		}
 	}
 	else if( GameManager::Instance()->m_CurrentChainType == GameManager::BugType_Red )
@@ -246,7 +246,7 @@ void GameWorld::CheckChainLength()
 			GameManager::Instance()->m_MaxRedChainLength )
 		{
 			GameManager::Instance()->DestroyChain();
-			DrawLightning();
+			DrawLightning( true );
 		}
 	}
 	else if( GameManager::Instance()->m_CurrentChainType == GameManager::BugType_Green )
@@ -255,7 +255,7 @@ void GameWorld::CheckChainLength()
 			GameManager::Instance()->m_MaxGreenChainLength )
 		{
 			GameManager::Instance()->DestroyChain();
-			DrawLightning();
+			DrawLightning( true );
 		}
 	}
 }
@@ -429,7 +429,7 @@ bool GameWorld::IsGameOver()
 void GameWorld::TransitionToGameOver()
 {
 	GameManager::Instance()->DestroyChain();
-	DrawLightning();
+	DrawLightning( true );
 
 	CCScene* pScene = GameOver::scene();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create( 0.5, pScene));
@@ -442,9 +442,11 @@ void GameWorld::TransitionToGameOver()
 void GameWorld::checkBugsCollideWithPoint( CCPoint point )
 {
 	std::vector<BugBase*>* bugs;
+	std::vector<int> bugsHitLocation;
 	bugs = GameManager::Instance()->m_Bugs;
-	float touchLeniencyFactor = 2;//1.5;
+	float touchLeniencyFactor = 3;
 
+	/* collect all the bugs we have hit */
 	for( int i = 0; i < bugs->size(); i++ )
 	{
 		float tarRadius = ( (*bugs)[i]->m_pSprite->getContentSize().width / 2 ) * touchLeniencyFactor;
@@ -455,16 +457,45 @@ void GameWorld::checkBugsCollideWithPoint( CCPoint point )
 		if( distance <= (tarRadius * tarRadius) )
 		{
 			/* bug is hit! */
-			(*bugs)[i]->SetBugState(BugBase::BugState_Shocked);
-			GameManager::Instance()->m_BugsHitByLightning->push_back( (*bugs)[i] );
-			GameManager::Instance()->AddBugHit( (*bugs)[i] );
+			bugsHitLocation.push_back( i );
+		}
+	}
 
-			bugs->erase( bugs->begin()+i );
-			this->CheckChainLength();
+	/* choose the bug we want if we hit multiple bugs on accident */
+	if( bugsHitLocation.size() == 1 )
+	{
+		(*bugs)[bugsHitLocation[0]]->SetBugState(BugBase::BugState_Shocked);
+		GameManager::Instance()->m_BugsHitByLightning->push_back( (*bugs)[bugsHitLocation[0]] );
+		GameManager::Instance()->AddBugHit( (*bugs)[bugsHitLocation[0]] );
 
-			if( GameManager::Instance()->m_BugsHitByLightning->size() > 0 )
+		bugs->erase( bugs->begin()+bugsHitLocation[0] );
+		this->CheckChainLength();
+
+		if( GameManager::Instance()->m_BugsHitByLightning->size() > 0 )
+		{
+			m_remainingChainTime = GameManager::Instance()->m_MaxNextBugTime;
+		}
+	}
+	else
+	{
+		for( int i = 0; i < bugsHitLocation.size(); i++ )
+		{
+			if( ( 	GameManager::Instance()->ReturnBugType((*bugs)[bugsHitLocation[i]]) ==
+					GameManager::Instance()->m_CurrentChainType ) ||
+				(	GameManager::Instance()->m_CurrentChainType == GameManager::BugType_None )
+			  )
 			{
-				m_remainingChainTime = GameManager::Instance()->m_MaxNextBugTime;
+				(*bugs)[bugsHitLocation[i]]->SetBugState(BugBase::BugState_Shocked);
+				GameManager::Instance()->m_BugsHitByLightning->push_back( (*bugs)[bugsHitLocation[i]] );
+				GameManager::Instance()->AddBugHit( (*bugs)[bugsHitLocation[i]] );
+
+				bugs->erase( bugs->begin()+bugsHitLocation[i] );
+				this->CheckChainLength();
+
+				if( GameManager::Instance()->m_BugsHitByLightning->size() > 0 )
+				{
+					m_remainingChainTime = GameManager::Instance()->m_MaxNextBugTime;
+				}
 			}
 		}
 	}
@@ -481,6 +512,7 @@ bool GameWorld::ccTouchBegan( CCTouch* touch, CCEvent* event )
 	touchLocation = CCDirector::sharedDirector()->convertToGL(touchLocation);
 
 	checkBugsCollideWithPoint( touchLocation );
+	DrawLightning( true );
 
 	return true;
 }
