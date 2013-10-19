@@ -449,7 +449,7 @@ void GameWorld::TransitionToGameOver()
 	GameManager::Instance()->DestroyChain();
 	DrawLightning( true );
 
-	delete m_pFloatingTextManager;
+	//delete m_pFloatingTextManager;
 
 	CCScene* pScene = GameOver::scene();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create( 0.5, pScene));

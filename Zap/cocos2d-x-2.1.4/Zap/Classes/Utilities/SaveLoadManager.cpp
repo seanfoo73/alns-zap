@@ -47,5 +47,4 @@ void SaveLoadManager::getHighScores( std::vector<int>* pHighScores )
 		const char* keyString = keyBuf;
 		pHighScores->push_back( CCUserDefault::sharedUserDefault()->getIntegerForKey(keyString));
 	}
-
 }

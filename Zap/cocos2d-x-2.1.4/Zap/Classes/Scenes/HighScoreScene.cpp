@@ -83,14 +83,12 @@ void HighScore::PopulateHighScores()
 
 	if( pHighScores->size() == 0 )
 	{
-		CCLOG("No High Scores Found\n");
 		ClearHighScores( pHighScores );
 		OutputHighScores( pHighScores );
 		SaveLoadManager::Instance()->setHighScores( pHighScores );
 	}
 	else
 	{
-		CCLOG("High Scores Found\n");
 		OutputHighScores( pHighScores );
 	}
 
@@ -111,7 +109,7 @@ void HighScore::OutputHighScores( std::vector<int>* pHighScores )
 {
 	for( int i = 0; i < pHighScores->size(); ++i )
 	{
-		sprintf(scoreBuf, "%d. %d", i, (*pHighScores)[i]);
+		sprintf(scoreBuf, "%d. %d", i+1, (*pHighScores)[i]);
 		const char* scoreString = scoreBuf;
 
 		CCLabelTTF* pScore = CCLabelTTF::create(scoreString, "fonts/Roboto-Regular.ttf", m_nHighScoreFontSize );

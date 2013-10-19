@@ -53,7 +53,7 @@ void GameMenu::createMenu()
 {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
-	CCMenuItemFont::setFontSize( 108 );
+	CCMenuItemFont::setFontSize( 72 );
 	CCMenuItemFont::setFontName( "fonts/Roboto-Regular.ttf" );
 
 	CCMenuItemFont* pStartButton = CCMenuItemFont::create(
