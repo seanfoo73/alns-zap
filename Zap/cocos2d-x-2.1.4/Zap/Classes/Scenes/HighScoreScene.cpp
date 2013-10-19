@@ -29,6 +29,8 @@ bool HighScore::init()
 	m_nHighScoreFontSize = 40;
 	m_nHighScoreFontSpacing = 20;
 
+	m_HighScoreLabels.clear();
+
 	CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
 										"CloseNormal.png",
 										"CloseSelected.png",
@@ -46,6 +48,7 @@ bool HighScore::init()
 	this->addChild(pLabel, 1);
 
 	createMenu();
+	createFunctionsMenu();
 	PopulateHighScores();
 
 	if( SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying() )
@@ -73,6 +76,25 @@ void HighScore::createMenu()
 	pGameMenu->alignItemsVertically();
 	pGameMenu->setPosition( ccp( size.width/2, 80 ) );
 	this->addChild(pGameMenu, 1);
+}
+
+void HighScore::createFunctionsMenu()
+{
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
+
+	CCMenuItemFont::setFontSize( 48 );
+	CCMenuItemFont::setFontName( "fonts/Roboto-Regular.ttf" );
+
+	CCMenuItemFont* pClearHighScoresButton = CCMenuItemFont::create(
+													"Clear Scores",
+													this,
+													menu_selector(HighScore::clearHighScoresCallback ) );
+	pClearHighScoresButton->setPosition( ccp( 0, 0 ) );
+
+	pFunctionsMenu = CCMenu::create(pClearHighScoresButton, NULL);
+	pFunctionsMenu->alignItemsVertically();
+	pFunctionsMenu->setPosition( ccp( (size.width/4),  size.height/2 ) );
+	this->addChild( pFunctionsMenu, 1);
 }
 
 void HighScore::PopulateHighScores()
@@ -117,7 +139,28 @@ void HighScore::OutputHighScores( std::vector<int>* pHighScores )
 		pScore->setPosition( ccp( 	size.width / 2,
 									size.height - size.height/4 - ((m_nHighScoreFontSize+m_nHighScoreFontSpacing)*i) ) );
 		this->addChild( pScore, 1 );
+		m_HighScoreLabels.push_back( pScore );
 	}
+}
+
+void HighScore::clearHighScoresCallback( CCObject* pSender )
+{
+	std::vector<int>* pHighScores = new std::vector<int>();
+
+	ClearHighScores( pHighScores );
+	SaveLoadManager::Instance()->setHighScores( pHighScores );
+
+	for( 	std::vector<CCLabelTTF*>::iterator i = m_HighScoreLabels.begin();
+			i != m_HighScoreLabels.end();
+			)
+	{
+		this->removeChild((*i), true );
+		i = m_HighScoreLabels.erase(i);
+	}
+
+	OutputHighScores( pHighScores );
+
+	delete pHighScores;
 }
 
 void HighScore::menuCloseCallback( CCObject* pSender )

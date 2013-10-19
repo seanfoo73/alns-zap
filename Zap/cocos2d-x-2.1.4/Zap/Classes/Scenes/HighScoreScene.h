@@ -12,7 +12,9 @@ class HighScore : public cocos2d::CCLayer
 		static cocos2d::CCScene* scene();
 
 		void createMenu();
+		void createFunctionsMenu();
 
+		void clearHighScoresCallback( CCObject* pSender );
 		void menuCloseCallback( CCObject* pSender );
 		void menuGameMenuCallback( CCObject* pSender );
 
@@ -23,6 +25,9 @@ class HighScore : public cocos2d::CCLayer
 		void OutputHighScores( std::vector<int>* pHighScores );
 
 		cocos2d::CCMenu* pGameMenu;
+		cocos2d::CCMenu* pFunctionsMenu;
+
+		std::vector<cocos2d::CCLabelTTF*> m_HighScoreLabels;
 
 		int m_nMaxHighScores;
 		int m_nHighScoreFontSize;
