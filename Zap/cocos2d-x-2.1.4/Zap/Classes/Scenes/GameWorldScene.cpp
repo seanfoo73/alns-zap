@@ -446,10 +446,14 @@ bool GameWorld::IsGameOver()
 
 void GameWorld::TransitionToGameOver()
 {
+	this->unschedule( schedule_selector(GameWorld::update) );
 	GameManager::Instance()->DestroyChain();
 	DrawLightning( true );
 
-	//delete m_pFloatingTextManager;
+	/**
+	if( m_pFloatingTextManager )
+		delete m_pFloatingTextManager;
+	/**/
 
 	CCScene* pScene = GameOver::scene();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create( 0.5, pScene));

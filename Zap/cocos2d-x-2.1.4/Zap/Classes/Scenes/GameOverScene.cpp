@@ -134,19 +134,28 @@ void GameOver::OutputHighScores( std::vector<int>* pHighScores )
 void GameOver::DetermineIfNewHighScore( std::vector<int>* pHighScores )
 {
 	m_bNewHighScore = false;
+	int nLastScore = -1;	//will be used to push down scores in the event of a new high score
 
 	for( int i = 0; i < pHighScores->size(); ++i )
 	{
-		if( GameManager::Instance()->m_Score > (*pHighScores)[i] )
+		if( GameManager::Instance()->m_Score > (*pHighScores)[i] && !m_bNewHighScore)
 		{
+			nLastScore = (*pHighScores)[i];
 			//New high score found!
 			(*pHighScores)[i] = GameManager::Instance()->m_Score;
 			m_bNewHighScore = true;
-			break;
+			continue;
 		}
-		else if( GameManager::Instance()->m_Score == (*pHighScores)[i])
+		else if( GameManager::Instance()->m_Score == (*pHighScores)[i] && !m_bNewHighScore)
 		{
 			// for future use
+		}
+
+		if( m_bNewHighScore && nLastScore != -1 )
+		{
+			int temp = (*pHighScores)[i];
+			(*pHighScores)[i] = nLastScore;
+			nLastScore = temp;
 		}
 	}
 	SaveLoadManager::Instance()->setHighScores( pHighScores );
