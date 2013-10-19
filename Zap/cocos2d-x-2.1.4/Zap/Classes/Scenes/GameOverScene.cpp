@@ -117,6 +117,7 @@ void GameOver::ClearHighScores( std::vector<int>* pHighScores )
 
 void GameOver::OutputHighScores( std::vector<int>* pHighScores )
 {
+	DetermineIfNewHighScore( pHighScores );
 	for( int i = 0; i < pHighScores->size(); ++i )
 	{
 		sprintf(scoreBuf, "%d. %d", i+1, (*pHighScores)[i]);
@@ -128,6 +129,27 @@ void GameOver::OutputHighScores( std::vector<int>* pHighScores )
 									size.height - size.height/4 - ((m_nHighScoreFontSize+m_nHighScoreFontSpacing)*i) ) );
 		this->addChild( pScore, 1 );
 	}
+}
+
+void GameOver::DetermineIfNewHighScore( std::vector<int>* pHighScores )
+{
+	m_bNewHighScore = false;
+
+	for( int i = 0; i < pHighScores->size(); ++i )
+	{
+		if( GameManager::Instance()->m_Score > (*pHighScores)[i] )
+		{
+			//New high score found!
+			(*pHighScores)[i] = GameManager::Instance()->m_Score;
+			m_bNewHighScore = true;
+			break;
+		}
+		else if( GameManager::Instance()->m_Score == (*pHighScores)[i])
+		{
+			// for future use
+		}
+	}
+	SaveLoadManager::Instance()->setHighScores( pHighScores );
 }
 
 void GameOver::DisplayCurrentScore()
@@ -146,6 +168,14 @@ void GameOver::DisplayCurrentScore()
 	pScore->setPosition( ccp( 	size.width / 8,
 								size.height - size.height / 4 ) );
 	this->addChild( pScore, 1);
+
+	if( m_bNewHighScore )
+	{
+		CCLabelTTF* pNewHSLabel = CCLabelTTF::create("New High Score!!!", "fonts/Roboto-Regular.ttf", m_nHighScoreFontSize );
+		pNewHSLabel->setPosition( ccp(	size.width / 8,
+										size.height - size.height / 4 - (m_nHighScoreFontSize+m_nHighScoreFontSpacing )));
+		this->addChild( pNewHSLabel, 1);
+	}
 }
 
 void GameOver::menuCloseCallback(CCObject* pSender)

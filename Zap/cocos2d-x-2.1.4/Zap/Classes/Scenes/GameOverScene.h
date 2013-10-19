@@ -22,6 +22,7 @@ class GameOver : public cocos2d::CCLayer
 		void PopulateHighScores();
 		void ClearHighScores( std::vector<int>* pHighScores );
 		void OutputHighScores( std::vector<int>* pHighScores );
+		void DetermineIfNewHighScore( std::vector<int>* pHighScores );
 
 		void DisplayCurrentScore();
 
@@ -32,6 +33,8 @@ class GameOver : public cocos2d::CCLayer
 		int m_nHighScoreFontSpacing;
 
 		char scoreBuf[128];
+
+		bool m_bNewHighScore;
 };
 
 #endif /* __GAMEOVER_SCENE_H__ */
