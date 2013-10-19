@@ -130,7 +130,7 @@ void GameManager::DestroyChain()
 		bugToDelete = (*m_BugsHitByLightning)[0];
 		m_BugsHitByLightning->erase(m_BugsHitByLightning->begin());
 
-		bugToDelete->SetBugState( BugBase::BugState_Dead );
+		bugToDelete->SetBugState( BugBase::BugState_Dead_KILLED );
 		m_BugsToDelete->push_back( bugToDelete );
 	}
 	m_CurrentChainType = BugType_None;
@@ -158,9 +158,9 @@ void GameManager::CalculateChainPoints()
 		}
 	}
 
-	m_Score += CalculateBlueBugChain ( numBlueBugs );
-	m_Score += CalculateRedBugChain( numRedBugs );
-	m_Score += CalculateGreenBugChain( numGreenBugs );
+	m_Score += CalculateBlueBugChain ( numBlueBugs, m_BugsHitByLightning );
+	m_Score += CalculateRedBugChain( numRedBugs, m_BugsHitByLightning );
+	m_Score += CalculateGreenBugChain( numGreenBugs, m_BugsHitByLightning );
 
 	/**/
 	if( numBlueBugs >= m_MaxBlueChainLength )
@@ -178,37 +178,46 @@ void GameManager::CalculateChainPoints()
 	/**/
 }
 
-int GameManager::CalculateBlueBugChain( int _numBugs )
+int GameManager::CalculateBlueBugChain( int _numBugs, std::vector<BugBase*>* bugsHitByLightning )
 {
 	int pointsEarned = 0;
+	BugBase* bug;
 
-	for( int i = 1; i <= _numBugs; i++ )
+	for( int i = 0; i <= _numBugs; i++ )
 	{
-		pointsEarned += m_BaseBluePoints * i;
+		pointsEarned += m_BaseBluePoints * i+1;
+		bug = (*bugsHitByLightning)[i];
+		bug->SetPointValue( m_BaseBluePoints * i+1 );
 	}
 
 	return pointsEarned;
 }
 
-int GameManager::CalculateRedBugChain( int _numBugs )
+int GameManager::CalculateRedBugChain( int _numBugs, std::vector<BugBase*>* bugsHitByLightning )
 {
 	int pointsEarned = 0;
+	BugBase* bug;
 
 	for( int i = 0; i < _numBugs; i++ )
 	{
 		pointsEarned += m_BaseRedPoints;
+		bug = (*bugsHitByLightning)[i];
+		bug->SetPointValue( m_BaseRedPoints);
 	}
 
 	return pointsEarned;
 }
 
-int GameManager::CalculateGreenBugChain( int _numBugs )
+int GameManager::CalculateGreenBugChain( int _numBugs, std::vector<BugBase*>* bugsHitByLightning )
 {
 	int pointsEarned = 0;
+	BugBase* bug;
 
 	for( int i = 0; i < _numBugs; i++ )
 	{
 		pointsEarned += m_BaseGreenPoints;
+		bug = (*bugsHitByLightning)[i];
+		bug->SetPointValue( m_BaseGreenPoints);
 	}
 
 	return pointsEarned;

@@ -10,7 +10,8 @@ class BugBase
 		{
 			BugState_Alive = 0,
 			BugState_Shocked,
-			BugState_Dead
+			BugState_Dead_KILLED,	//killed by player
+			BugState_Dead_OOB		//out of bounds death
 		};
 
 		BugBase( const char* spriteFileName );
@@ -31,9 +32,11 @@ class BugBase
 
 		void SetPosition( cocos2d::CCPoint point );
 		void SetBugState( EBugState state );
+		void SetPointValue( int value );
 
 		int GetPositionX();
 		int GetPositionY();
+		int GetPointValue();
 		enum EBugState GetBugState();
 
 		cocos2d::CCSprite* m_pSprite;

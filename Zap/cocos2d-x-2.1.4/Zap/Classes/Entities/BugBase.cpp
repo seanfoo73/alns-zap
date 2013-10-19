@@ -152,6 +152,11 @@ void BugBase::SetBugState( EBugState state )
 	m_State = state;
 }
 
+void BugBase::SetPointValue( int value )
+{
+	m_pointValue = value;
+}
+
 enum BugBase::EBugState BugBase::GetBugState()
 {
 	return m_State;
@@ -165,6 +170,11 @@ int BugBase::GetPositionX()
 int BugBase::GetPositionY()
 {
 	return static_cast<int>(m_pSprite->getPositionY());
+}
+
+int BugBase::GetPointValue()
+{
+	return m_pointValue;
 }
 
 float BugBase::toRadians( int const angle )

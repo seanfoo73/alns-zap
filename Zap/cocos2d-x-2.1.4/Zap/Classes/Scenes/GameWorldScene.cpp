@@ -102,6 +102,8 @@ bool GameWorld::init()
 
 	SimpleAudioEngine::sharedEngine()->playBackgroundMusic("Zap_BackgroundMainLoop.mp3", true );
 
+	m_pFloatingTextManager = new FloatingTextManager( this );
+
 	this->schedule( schedule_selector(GameWorld::update) );
 
 	return true;
@@ -177,6 +179,8 @@ void GameWorld::update(float _dt)
 	CheckBugsOutOfBounds();
 	RemoveBugsFromWorld();
 
+	m_pFloatingTextManager->update( _dt );
+
 	m_LightningLastCalc += _dt;
 
 	m_remainingChainTime -= _dt;
@@ -221,7 +225,7 @@ void GameWorld::CheckBugsOutOfBounds()
 		bug = (*bugs)[i];
 		if( !bug->CheckIfInBounds() )
 		{
-			bug->SetBugState( BugBase::BugState_Dead );
+			bug->SetBugState( BugBase::BugState_Dead_OOB);
 			bugs->erase( bugs->begin() + i );
 			GameManager::Instance()->m_BugsToDelete->push_back( bug );
 			GameManager::Instance()->m_NumReachedOutOfBounds++;
@@ -269,8 +273,18 @@ void GameWorld::RemoveBugsFromWorld()
 	for( int i = 0; i < numBugsToRemove; i++ )
 	{
 		bug = (*bugsToDelete)[0];
+
+		if( bug->GetBugState() == BugBase::BugState_Dead_KILLED )
+		{
+			m_pFloatingTextManager->addFloatingText( 	"test",
+														bug->GetPositionX(),
+														bug->GetPositionY(),
+														24.0f, 2.0f );
+		}
+
 		this->removeChild( bug->m_pSprite, true );
 		bugsToDelete->erase( bugsToDelete->begin() + 0 );
+
 		delete bug;
 
 		GameManager::Instance()->m_BugsDeleted++;
@@ -430,6 +444,8 @@ void GameWorld::TransitionToGameOver()
 {
 	GameManager::Instance()->DestroyChain();
 	DrawLightning( true );
+
+	delete m_pFloatingTextManager;
 
 	CCScene* pScene = GameOver::scene();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create( 0.5, pScene));

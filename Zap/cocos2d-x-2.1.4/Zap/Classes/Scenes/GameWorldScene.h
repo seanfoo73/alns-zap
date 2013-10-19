@@ -6,6 +6,8 @@
 
 #include "../Effects/LightningLine.h"
 
+#include "../Utilities/FloatingTextManager.h"
+
 #include <vector>
 
 class GameWorld: public cocos2d::CCLayer {
@@ -71,6 +73,8 @@ private:
 
 	std::vector<LightningLine*>* m_LightningPoints;
 	float m_LightningLastCalc;
+
+	FloatingTextManager* m_pFloatingTextManager;
 };
 
 #endif /* __GAMEWORLD_SCENE_H__ */

@@ -50,9 +50,9 @@ class GameManager
 
 		void DestroyChain();
 		void CalculateChainPoints();
-		int CalculateBlueBugChain( int _numBugs );
-		int CalculateRedBugChain( int _numBugs );
-		int CalculateGreenBugChain( int _numBugs );
+		int CalculateBlueBugChain( int _numBugs, std::vector<BugBase*>* bugsHitByLightning );
+		int CalculateRedBugChain( int _numBugs, std::vector<BugBase*>* bugsHitByLightning );
+		int CalculateGreenBugChain( int _numBugs, std::vector<BugBase*>* bugsHitByLightning );
 		void ApplyBlueBonus();
 		void ApplyRedBonus();
 		void ApplyGreenBonus();
