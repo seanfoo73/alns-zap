@@ -1,6 +1,8 @@
 #include "HighScoreScene.h"
 #include "GameMenuScene.h"
 #include "SimpleAudioEngine.h"
+#include "../Utilities/SaveLoadManager.h"
+#include <vector>
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -23,6 +25,10 @@ bool HighScore::init()
 		return false;
 	}
 
+	m_nMaxHighScores = 5;
+	m_nHighScoreFontSize = 40;
+	m_nHighScoreFontSpacing = 20;
+
 	CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
 										"CloseNormal.png",
 										"CloseSelected.png",
@@ -40,6 +46,7 @@ bool HighScore::init()
 	this->addChild(pLabel, 1);
 
 	createMenu();
+	PopulateHighScores();
 
 	if( SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying() )
 	{
@@ -53,7 +60,7 @@ void HighScore::createMenu()
 {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
-	CCMenuItemFont::setFontSize( 108 );
+	CCMenuItemFont::setFontSize( 72 );
 	CCMenuItemFont::setFontName( "fonts/Roboto-Regular.ttf" );
 
 	CCMenuItemFont* pGameMenuButton = CCMenuItemFont::create(
@@ -64,13 +71,55 @@ void HighScore::createMenu()
 
 	pGameMenu = CCMenu::create(pGameMenuButton, NULL);
 	pGameMenu->alignItemsVertically();
-	pGameMenu->setPosition( ccp( size.width/2, size.height/2 ) );
+	pGameMenu->setPosition( ccp( size.width/2, 80 ) );
 	this->addChild(pGameMenu, 1);
 }
 
 void HighScore::PopulateHighScores()
 {
+	std::vector<int>* pHighScores = new std::vector<int>();
 
+	SaveLoadManager::Instance()->getHighScores( pHighScores );
+
+	if( pHighScores->size() == 0 )
+	{
+		CCLOG("No High Scores Found\n");
+		ClearHighScores( pHighScores );
+		OutputHighScores( pHighScores );
+		SaveLoadManager::Instance()->setHighScores( pHighScores );
+	}
+	else
+	{
+		CCLOG("High Scores Found\n");
+		OutputHighScores( pHighScores );
+	}
+
+	delete pHighScores;
+}
+
+void HighScore::ClearHighScores( std::vector<int>* pHighScores )
+{
+	pHighScores->clear();
+
+	for( int i = 0; i < m_nMaxHighScores; ++i )
+	{
+		pHighScores->push_back( 0 );
+	}
+}
+
+void HighScore::OutputHighScores( std::vector<int>* pHighScores )
+{
+	for( int i = 0; i < pHighScores->size(); ++i )
+	{
+		sprintf(scoreBuf, "%d. %d", i, (*pHighScores)[i]);
+		const char* scoreString = scoreBuf;
+
+		CCLabelTTF* pScore = CCLabelTTF::create(scoreString, "fonts/Roboto-Regular.ttf", m_nHighScoreFontSize );
+		CCSize size = CCDirector::sharedDirector()->getWinSize();
+		pScore->setPosition( ccp( 	size.width / 2,
+									size.height - size.height/4 - ((m_nHighScoreFontSize+m_nHighScoreFontSpacing)*i) ) );
+		this->addChild( pScore, 1 );
+	}
 }
 
 void HighScore::menuCloseCallback( CCObject* pSender )

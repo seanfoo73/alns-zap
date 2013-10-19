@@ -28,7 +28,7 @@ bool GameMenu::init()
 	/* this is the close button at the bottom left of the screen */
 	CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
 										"CloseNormal.png",
-										"CloseSelectd.png",
+										"CloseSelected.png",
 										this,
 										menu_selector(GameMenu::menuCloseCallback) );
 	pCloseItem->setPosition( ccp(CCDirector::sharedDirector()->getWinSize().width - 20, 20) );

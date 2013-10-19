@@ -15,6 +15,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/Scenes/HighScoreScene.cpp \
                    ../../Classes/Utilities/FloatingTextManager.cpp \
                    ../../Classes/Utilities/GameManager.cpp \
+                   ../../Classes/Utilities/SaveLoadManager.cpp \
                    ../../Classes/Effects/LightningLine.cpp \
                    ../../Classes/Entities/BugBase.cpp \
                    ../../Classes/Entities/BlueBug.cpp \
