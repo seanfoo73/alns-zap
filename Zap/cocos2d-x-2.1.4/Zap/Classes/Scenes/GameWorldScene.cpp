@@ -274,13 +274,17 @@ void GameWorld::RemoveBugsFromWorld()
 	{
 		bug = (*bugsToDelete)[0];
 
+		/**/
 		if( bug->GetBugState() == BugBase::BugState_Dead_KILLED )
 		{
-			m_pFloatingTextManager->addFloatingText( 	"test",
+			char buf[64];
+			sprintf(buf, "+%d", bug->GetPointValue());
+			m_pFloatingTextManager->addFloatingText( 	buf,
 														bug->GetPositionX(),
 														bug->GetPositionY(),
 														24.0f, 2.0f );
 		}
+		/**/
 
 		this->removeChild( bug->m_pSprite, true );
 		bugsToDelete->erase( bugsToDelete->begin() + 0 );

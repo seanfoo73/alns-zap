@@ -53,13 +53,15 @@ void GameManager::AddBugHit( BugBase* bug )
 		if( m_CurrentChainType == BugType_None )
 		{
 			m_CurrentChainType = BugType_Blue;
+			bug->SetPointValue( m_BaseBluePoints*m_BugsHitByLightning->size() );
 		}
 		else if( m_CurrentChainType == BugType_Blue )
 		{
-			//Do nothing
+			bug->SetPointValue( m_BaseBluePoints*m_BugsHitByLightning->size() );
 		}
 		else
 		{
+			bug->SetPointValue( m_BaseBluePoints );
 			DestroyChain();
 			m_CurrentChainType = BugType_None;
 		}
@@ -69,13 +71,15 @@ void GameManager::AddBugHit( BugBase* bug )
 		if( m_CurrentChainType == BugType_None )
 		{
 			m_CurrentChainType = BugType_Red;
+			bug->SetPointValue( m_BaseRedPoints );
 		}
 		else if( m_CurrentChainType == BugType_Red )
 		{
-			//Do Nothing
+			bug->SetPointValue( m_BaseRedPoints );
 		}
 		else
 		{
+			bug->SetPointValue( m_BaseRedPoints );
 			DestroyChain();
 			m_CurrentChainType = BugType_None;
 		}
@@ -84,14 +88,16 @@ void GameManager::AddBugHit( BugBase* bug )
 	{
 		if( m_CurrentChainType == BugType_None )
 		{
+			bug->SetPointValue( m_BaseGreenPoints );
 			m_CurrentChainType = BugType_Green;
 		}
 		else if( m_CurrentChainType == BugType_Green )
 		{
-			//Do Nothing
+			bug->SetPointValue( m_BaseGreenPoints );
 		}
 		else
 		{
+			bug->SetPointValue( m_BaseGreenPoints );
 			DestroyChain();
 			m_CurrentChainType = BugType_None;
 		}
@@ -156,11 +162,8 @@ void GameManager::CalculateChainPoints()
 		{
 			numGreenBugs++;
 		}
+		m_Score += (*m_BugsHitByLightning)[i]->GetPointValue();
 	}
-
-	m_Score += CalculateBlueBugChain ( numBlueBugs, m_BugsHitByLightning );
-	m_Score += CalculateRedBugChain( numRedBugs, m_BugsHitByLightning );
-	m_Score += CalculateGreenBugChain( numGreenBugs, m_BugsHitByLightning );
 
 	/**/
 	if( numBlueBugs >= m_MaxBlueChainLength )
@@ -176,51 +179,6 @@ void GameManager::CalculateChainPoints()
 		ApplyGreenBonus();
 	}
 	/**/
-}
-
-int GameManager::CalculateBlueBugChain( int _numBugs, std::vector<BugBase*>* bugsHitByLightning )
-{
-	int pointsEarned = 0;
-	BugBase* bug;
-
-	for( int i = 0; i <= _numBugs; i++ )
-	{
-		pointsEarned += m_BaseBluePoints * i+1;
-		bug = (*bugsHitByLightning)[i];
-		bug->SetPointValue( m_BaseBluePoints * i+1 );
-	}
-
-	return pointsEarned;
-}
-
-int GameManager::CalculateRedBugChain( int _numBugs, std::vector<BugBase*>* bugsHitByLightning )
-{
-	int pointsEarned = 0;
-	BugBase* bug;
-
-	for( int i = 0; i < _numBugs; i++ )
-	{
-		pointsEarned += m_BaseRedPoints;
-		bug = (*bugsHitByLightning)[i];
-		bug->SetPointValue( m_BaseRedPoints);
-	}
-
-	return pointsEarned;
-}
-
-int GameManager::CalculateGreenBugChain( int _numBugs, std::vector<BugBase*>* bugsHitByLightning )
-{
-	int pointsEarned = 0;
-	BugBase* bug;
-
-	for( int i = 0; i < _numBugs; i++ )
-	{
-		pointsEarned += m_BaseGreenPoints;
-		bug = (*bugsHitByLightning)[i];
-		bug->SetPointValue( m_BaseGreenPoints);
-	}
-
-	return pointsEarned;
 }
 
 void GameManager::ApplyBlueBonus()

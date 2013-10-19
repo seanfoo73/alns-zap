@@ -54,7 +54,7 @@ void FloatingTextManager::update( float _dt )
 		obj = (*i);
 		obj->label->setPosition( ccp( 	obj->label->getPositionX(),
 										obj->label->getPositionY() + ( m_fMoveSpeed * _dt ) ) );
-		//obj->label->setOpacity( obj->label->getOpacity()-m_fAlphaSpeed );
+		obj->label->setOpacity( obj->label->getOpacity()-m_fAlphaSpeed );
 		obj->currentDuration += _dt;
 
 		if( obj->currentDuration >= obj->maxDuration )
