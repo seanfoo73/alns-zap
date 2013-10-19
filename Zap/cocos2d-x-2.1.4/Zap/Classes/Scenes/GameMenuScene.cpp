@@ -1,5 +1,6 @@
 #include "GameMenuScene.h"
 #include "GameWorldScene.h"
+#include "HighScoreScene.h"
 #include "SimpleAudioEngine.h"
 
 using namespace cocos2d;
@@ -60,18 +61,21 @@ void GameMenu::createMenu()
 										this,
 										menu_selector(GameMenu::menuStartGameCallback) );
 	pStartButton->setPosition( ccp( 0, 0 ) );
-	//pStartButton->setFontSize( 108 );
-	//pStartButton->setFontName( "fonts/Roboto-Regular.ttf" );
+
+	CCMenuItemFont* pHighScoreButton = CCMenuItemFont::create(
+										"High Scores",
+										this,
+										menu_selector(GameMenu::menuHighScoreCallback) );
+	pHighScoreButton->setPosition( ccp( 0, 0) );
+
 
 	CCMenuItemFont* pExitButton = CCMenuItemFont::create(
 										"Exit",
 										this,
 										menu_selector(GameMenu::menuExitGameCallback) );
 	pExitButton->setPosition( ccp( 0, 0 ) );
-	//pExitButton->setFontSize( 108 );
-	//pExitButton->setFontName( "fonts/Roboto-Regular.ttf" );
 
-	pGameMenu = CCMenu::create(pStartButton, pExitButton, NULL);
+	pGameMenu = CCMenu::create(pStartButton, pHighScoreButton, pExitButton, NULL);
 	pGameMenu->alignItemsVertically();
 	pGameMenu->setPosition( ccp( size.width/2, size.height/2 ) );
 	this->addChild(pGameMenu, 1);
@@ -89,6 +93,12 @@ void GameMenu::menuCloseCallback(CCObject* pSender)
 void GameMenu::menuStartGameCallback(CCObject* pSender)
 {
 	CCScene* pScene = GameWorld::scene();
+	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, pScene));
+}
+
+void GameMenu::menuHighScoreCallback(CCObject* pSender)
+{
+	CCScene* pScene = HighScore::scene();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, pScene));
 }
 

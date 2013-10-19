@@ -14,6 +14,7 @@ class GameMenu : public cocos2d::CCLayer
 
 		void menuCloseCallback(CCObject* pSender);
 		void menuStartGameCallback(CCObject* pSender);
+		void menuHighScoreCallback(CCObject* pSender);
 		void menuExitGameCallback(CCObject* pSender);
 
 		CREATE_FUNC(GameMenu);
