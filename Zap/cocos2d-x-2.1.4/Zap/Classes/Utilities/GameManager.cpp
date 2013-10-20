@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include "../Scenes/GameWorldScene.h"
 #include "cocos2d.h" /* defines NULL */
 
 GameManager* GameManager::m_pInstance = NULL;
@@ -44,6 +45,11 @@ void GameManager::initData()
 	m_BaseGreenPoints = 20;
 
 	m_LightningRecalcInterval = 0.5f;
+}
+
+void GameManager::setGameLayer( cocos2d::CCLayer* gameLayer )
+{
+	m_pGameLayer = gameLayer;
 }
 
 void GameManager::AddBugHit( BugBase* bug )
@@ -184,6 +190,7 @@ void GameManager::CalculateChainPoints()
 void GameManager::ApplyBlueBonus()
 {
 	//Need to think of a bonus
+	m_Score += 1000;
 }
 
 void GameManager::ApplyRedBonus()
@@ -195,6 +202,8 @@ void GameManager::ApplyRedBonus()
 void GameManager::ApplyGreenBonus()
 {
 	//Grant extra time
+	if( m_pGameLayer )
+		static_cast<GameWorld*>(m_pGameLayer)->addGameTime( 5.0f );
 }
 
 enum GameManager::EBugType GameManager::ReturnBugType( BugBase* bug )

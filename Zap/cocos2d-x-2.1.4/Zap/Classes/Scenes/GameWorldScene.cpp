@@ -22,6 +22,8 @@ bool GameWorld::init()
 	}
 	this->registerWithTouchDispatcher();
 
+	GameManager::Instance()->setGameLayer( this );
+
 	m_respawnTimer = 0;
 	m_respawnInterval = 0.25;
 
@@ -134,6 +136,10 @@ void GameWorld::menuCloseCallback(CCObject* pSender)
 #endif
 }
 
+void GameWorld::addGameTime( float time )
+{
+	m_remainingGameTime += time;
+}
 
 void GameWorld::spawnBug()
 {

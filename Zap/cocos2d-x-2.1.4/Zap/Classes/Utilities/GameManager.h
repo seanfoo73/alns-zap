@@ -2,6 +2,7 @@
 #define __GAMEMANAGER_H__
 
 #include "cocos2d.h"
+#include "../Scenes/GameWorldScene.h"
 #include <vector>
 #include "../Entities/BugBase.h"
 #include "../Entities/BlueBug.h"
@@ -45,6 +46,8 @@ class GameManager
 		virtual bool init();
 		virtual void initData();
 
+		void setGameLayer( cocos2d::CCLayer* gameLayer );
+
 		void AddBugHit( BugBase* bug );
 		const char* GetChainTypeString();
 
@@ -65,6 +68,8 @@ class GameManager
 		GameManager(GameManager const&) {};
 		GameManager& operator=(GameManager const&) {};
 		static GameManager* m_pInstance;
+
+		cocos2d::CCLayer* m_pGameLayer;
 };
 
 #endif /* __GAMEMANAGER_H__ */

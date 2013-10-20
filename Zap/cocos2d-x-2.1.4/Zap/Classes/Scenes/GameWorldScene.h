@@ -40,6 +40,7 @@ public:
 
 	void checkBugsCollideWithPoint(cocos2d::CCPoint point);
 
+	void addGameTime( float time );
 	void spawnBug();
 
 	virtual void registerWithTouchDispatcher();
