@@ -54,6 +54,8 @@ bool GameWorld::init()
 	pLabel->setPosition( ccp( size.width / 2, size.height - 20 ) );
 	this->addChild(pLabel, 5 );
 
+	m_countdownTextTimer = 0.0f;
+	m_countdownTimerStart = 10.0f;
 	sprintf(timeLeftStringBuf, "Time: %1.1f", m_remainingGameTime);
 	const char* timeLeftString = timeLeftStringBuf;
 	m_pTimeLeftLabel = CCLabelTTF::create( timeLeftString, "fonts/Roboto-Regular.ttf", 32);
@@ -177,6 +179,11 @@ void GameWorld::update(float _dt)
 		m_respawnTimer = 0;
 	}
 
+	if( m_remainingGameTime <= (m_countdownTimerStart+1.0f) )
+	{
+		m_countdownTextTimer += _dt;
+	}
+
 	UpdateGUI();
 	CheckBugsOutOfBounds();
 	RemoveBugsFromWorld();
@@ -209,6 +216,8 @@ void GameWorld::UpdateGUI()
 	else
 	{
 		sprintf(timeLeftStringBuf, "Time: %1.1f", m_remainingGameTime);
+
+		DoCountdown();
 	}
 	sprintf(scoreStringBuf, "Score: %d", GameManager::Instance()->m_Score);
 
@@ -217,6 +226,25 @@ void GameWorld::UpdateGUI()
 
 	const char* scoreString = scoreStringBuf;
 	m_pScoreLabel->setString( scoreString );
+}
+
+void GameWorld::DoCountdown()
+{
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
+
+	if( m_countdownTextTimer >= 1.0f )
+	{
+		m_countdownTextTimer = 0.0f;
+		if( m_pFloatingTextManager )
+		{
+			char buf[8];
+			sprintf( buf, "%d", (int)m_remainingGameTime+1);
+			m_pFloatingTextManager->addFloatingText( 	buf,
+														size.width/2,
+														size.height - size.height/4,
+														96.0f, 1.0f );
+		}
+	}
 }
 
 void GameWorld::CheckBugsOutOfBounds()

@@ -21,6 +21,7 @@ public:
 	void update(float _dt);
 	void UpdateGameTime(float _dt);
 	void UpdateGUI();
+	void DoCountdown();
 	void CheckBugsOutOfBounds();
 	void CheckChainLength();
 	void RemoveBugsFromWorld();
@@ -77,6 +78,9 @@ private:
 	float m_LightningLastCalc;
 
 	FloatingTextManager* m_pFloatingTextManager;
+
+	float m_countdownTextTimer;
+	float m_countdownTimerStart;
 };
 
 #endif /* __GAMEWORLD_SCENE_H__ */
