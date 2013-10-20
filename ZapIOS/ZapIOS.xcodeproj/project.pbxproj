@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB1E1D301813805D00154FEB /* FloatingTextManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB1E1D2C1813805D00154FEB /* FloatingTextManager.cpp */; };
+		DB1E1D311813805D00154FEB /* SaveLoadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB1E1D2E1813805D00154FEB /* SaveLoadManager.cpp */; };
+		DB1E1D341813808C00154FEB /* HighScoreScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB1E1D321813808C00154FEB /* HighScoreScene.cpp */; };
 		DB4E317D17B8FAC8006859AC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB4E317C17B8FAC8006859AC /* QuartzCore.framework */; };
 		DB4E317F17B8FAC8006859AC /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB4E317E17B8FAC8006859AC /* OpenGLES.framework */; };
 		DB4E318117B8FAC8006859AC /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB4E318017B8FAC8006859AC /* OpenAL.framework */; };
@@ -328,6 +331,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB1E1D2C1813805D00154FEB /* FloatingTextManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloatingTextManager.cpp; sourceTree = "<group>"; };
+		DB1E1D2D1813805D00154FEB /* FloatingTextManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloatingTextManager.h; sourceTree = "<group>"; };
+		DB1E1D2E1813805D00154FEB /* SaveLoadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SaveLoadManager.cpp; sourceTree = "<group>"; };
+		DB1E1D2F1813805D00154FEB /* SaveLoadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveLoadManager.h; sourceTree = "<group>"; };
+		DB1E1D321813808C00154FEB /* HighScoreScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HighScoreScene.cpp; sourceTree = "<group>"; };
+		DB1E1D331813808C00154FEB /* HighScoreScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighScoreScene.h; sourceTree = "<group>"; };
 		DB4E317817B8FAC8006859AC /* ZapIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZapIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB4E317C17B8FAC8006859AC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		DB4E317E17B8FAC8006859AC /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -2238,6 +2247,8 @@
 		DB4E356017B8FF4D006859AC /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				DB1E1D321813808C00154FEB /* HighScoreScene.cpp */,
+				DB1E1D331813808C00154FEB /* HighScoreScene.h */,
 				DB4E356117B8FF4D006859AC /* GameMenuScene.cpp */,
 				DB4E356217B8FF4D006859AC /* GameMenuScene.h */,
 				DB4E356317B8FF4D006859AC /* GameOverScene.cpp */,
@@ -2251,6 +2262,10 @@
 		DB4E356717B8FF4D006859AC /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				DB1E1D2C1813805D00154FEB /* FloatingTextManager.cpp */,
+				DB1E1D2D1813805D00154FEB /* FloatingTextManager.h */,
+				DB1E1D2E1813805D00154FEB /* SaveLoadManager.cpp */,
+				DB1E1D2F1813805D00154FEB /* SaveLoadManager.h */,
 				DB4E356817B8FF4D006859AC /* GameManager.cpp */,
 				DB4E356917B8FF4D006859AC /* GameManager.h */,
 			);
@@ -2665,6 +2680,9 @@
 				DB4E357317B8FF4D006859AC /* GameWorldScene.cpp in Sources */,
 				DB4E357417B8FF4D006859AC /* GameManager.cpp in Sources */,
 				DBBF4A1717DAA766000E5CF3 /* LightningLine.cpp in Sources */,
+				DB1E1D301813805D00154FEB /* FloatingTextManager.cpp in Sources */,
+				DB1E1D311813805D00154FEB /* SaveLoadManager.cpp in Sources */,
+				DB1E1D341813808C00154FEB /* HighScoreScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
