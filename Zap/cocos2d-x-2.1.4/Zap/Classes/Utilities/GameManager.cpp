@@ -32,7 +32,7 @@ bool GameManager::init()
 
 void GameManager::initData()
 {
-	m_GameDuration = 10.0f;//60.0f;
+	m_GameDuration = 60.0f;
 	m_MaxNextBugTime = 2.0f;
 
 	m_MaxBlueChainLength = 10;

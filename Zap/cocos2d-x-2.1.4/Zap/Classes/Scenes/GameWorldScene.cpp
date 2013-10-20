@@ -104,6 +104,8 @@ bool GameWorld::init()
 
 	m_pFloatingTextManager = new FloatingTextManager( this );
 
+	m_bGameStarted = true;
+
 	this->schedule( schedule_selector(GameWorld::update) );
 
 	return true;
@@ -179,7 +181,8 @@ void GameWorld::update(float _dt)
 	CheckBugsOutOfBounds();
 	RemoveBugsFromWorld();
 
-	m_pFloatingTextManager->update( _dt );
+	if( m_pFloatingTextManager )
+		m_pFloatingTextManager->update( _dt );
 
 	m_LightningLastCalc += _dt;
 
@@ -279,10 +282,13 @@ void GameWorld::RemoveBugsFromWorld()
 		{
 			char buf[64];
 			sprintf(buf, "+%d", bug->GetPointValue());
-			m_pFloatingTextManager->addFloatingText( 	buf,
-														bug->GetPositionX(),
-														bug->GetPositionY(),
-														24.0f, 2.0f );
+			if( m_pFloatingTextManager )
+			{
+				m_pFloatingTextManager->addFloatingText( 	buf,
+															bug->GetPositionX(),
+															bug->GetPositionY(),
+															24.0f, 2.0f );
+			}
 		}
 		/**/
 
@@ -302,6 +308,11 @@ void GameWorld::draw()
 
 void GameWorld::DrawLightning(bool forceRecalc)
 {
+	if( !m_bGameStarted )
+	{
+		CCLOG("GAMEWORLD::DRAWLIGHTNING::GAME IS OVER");
+		return;
+	}
 	std::vector<BugBase*>* bugs;
 	bugs = GameManager::Instance()->m_BugsHitByLightning;
 
@@ -446,14 +457,18 @@ bool GameWorld::IsGameOver()
 
 void GameWorld::TransitionToGameOver()
 {
+	m_bGameStarted = false;
 	this->unschedule( schedule_selector(GameWorld::update) );
 	GameManager::Instance()->DestroyChain();
 	DrawLightning( true );
 
-	/**
+	/**/
 	if( m_pFloatingTextManager )
 		delete m_pFloatingTextManager;
 	/**/
+
+	m_pLightningSegmentBatch->removeAllChildrenWithCleanup( true );
+	m_pLightningEndBatch->removeAllChildrenWithCleanup( true );
 
 	CCScene* pScene = GameOver::scene();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create( 0.5, pScene));

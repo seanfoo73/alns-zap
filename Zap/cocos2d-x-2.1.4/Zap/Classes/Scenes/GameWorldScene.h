@@ -50,6 +50,8 @@ public:
 
 	CREATE_FUNC (GameWorld);
 private:
+	bool m_bGameStarted;
+
 	cocos2d::CCLabelTTF* m_pTimeLeftLabel;
 	char timeLeftStringBuf[16];
 

@@ -25,6 +25,12 @@ FloatingTextManager::FloatingTextManager( CCLayer* _parent )
 
 void FloatingTextManager::addFloatingText( const char* _txt, float _x, float _y, float _size, float _duration )
 {
+	if( !m_pLayer || !m_pFloatingText )
+	{
+		CCLOG("FLOATINGTEXTMANAGER::ADDFLOATINGTEXT:: does not have refernce to layer or floating text list deleted.");
+		return;
+	}
+
 	CCLabelTTF* newLabel = CCLabelTTF::create( _txt, "fonts/Roboto-Regular.ttf", _size );
 
 	FloatingTextObject* newTextObject = new FloatingTextObject();
@@ -44,11 +50,17 @@ void FloatingTextManager::addFloatingText( const char* _txt, float _x, float _y,
 
 void FloatingTextManager::update( float _dt )
 {
+	if( !m_pFloatingText || !m_pLayer )
+	{
+		CCLOG("FLOATINGTEXTMANAGER::UPDATE:: does not have refernce to layer or floating text list deleted.");
+		return;
+	}
+
 	FloatingTextObject* obj;
 
 	for(	std::vector<FloatingTextObject*>::iterator i = m_pFloatingText->begin();
 			i != m_pFloatingText->end();
-			//Handle iterator incremental based on whether or not we remove
+			//Handle iterator increment based on whether or not we remove
 		)
 	{
 		obj = (*i);
@@ -73,5 +85,22 @@ void FloatingTextManager::update( float _dt )
 
 FloatingTextManager::~FloatingTextManager()
 {
-	delete m_pFloatingText;
+	FloatingTextObject* obj;
+	for(	std::vector<FloatingTextObject*>::iterator i = m_pFloatingText->begin();
+			i != m_pFloatingText->end();
+			//Handle iterator increment on remove
+		)
+	{
+		obj = (*i);
+		i = m_pFloatingText->erase(i);
+
+		if( obj )
+		{
+			m_pLayer->removeChild( obj->label, true );
+			delete obj;
+		}
+	}
+
+	if( m_pFloatingText )
+		delete m_pFloatingText;
 }
