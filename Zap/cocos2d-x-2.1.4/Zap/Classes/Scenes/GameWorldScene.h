@@ -42,6 +42,7 @@ public:
 
 	void addGameTime( float time );
 	void spawnBug();
+	void addFloatingText( const char* txt, float _x, float _y, float size, float duration );
 
 	virtual void registerWithTouchDispatcher();
 	virtual bool ccTouchBegan(cocos2d::CCTouch* touch, cocos2d::CCEvent* event);

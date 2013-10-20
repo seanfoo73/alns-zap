@@ -165,6 +165,14 @@ void GameWorld::spawnBug()
 	}
 }
 
+void GameWorld::addFloatingText( const char* txt, float _x, float _y, float size, float duration )
+{
+	if( m_pFloatingTextManager )
+	{
+		m_pFloatingTextManager->addFloatingText( txt, _x, _y, size, duration );
+	}
+}
+
 void GameWorld::update(float _dt)
 {
 	if( IsGameOver() )

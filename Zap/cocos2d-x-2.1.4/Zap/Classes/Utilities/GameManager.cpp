@@ -2,6 +2,8 @@
 #include "../Scenes/GameWorldScene.h"
 #include "cocos2d.h" /* defines NULL */
 
+using namespace cocos2d;
+
 GameManager* GameManager::m_pInstance = NULL;
 
 GameManager* GameManager::Instance()
@@ -191,12 +193,34 @@ void GameManager::ApplyBlueBonus()
 {
 	//Need to think of a bonus
 	m_Score += 1000;
+
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
+	char buf[64];
+	sprintf( buf, "Chain Bonus: 1000 points!" );
+	if( m_pGameLayer )
+	{
+		static_cast<GameWorld*>(m_pGameLayer)->addFloatingText( buf,
+																size.width/2,
+																size.height/4,
+																48.0f, 2.0f );
+	}
 }
 
 void GameManager::ApplyRedBonus()
 {
 	//score x2
 	m_Score *= 2;
+
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
+	char buf[64];
+	sprintf( buf, "Chain Bonus: Score x2!" );
+	if( m_pGameLayer )
+	{
+		static_cast<GameWorld*>(m_pGameLayer)->addFloatingText( buf,
+																size.width/2,
+																size.height/4,
+																48.0f, 2.0f );
+	}
 }
 
 void GameManager::ApplyGreenBonus()
@@ -204,6 +228,18 @@ void GameManager::ApplyGreenBonus()
 	//Grant extra time
 	if( m_pGameLayer )
 		static_cast<GameWorld*>(m_pGameLayer)->addGameTime( 5.0f );
+
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
+	char buf[64];
+	sprintf( buf, "Chain Bonus: +5 sec!" );
+	if( m_pGameLayer )
+	{
+		static_cast<GameWorld*>(m_pGameLayer)->addFloatingText( buf,
+																size.width/2,
+																size.height/4,
+																48.0f, 2.0f );
+	}
+
 }
 
 enum GameManager::EBugType GameManager::ReturnBugType( BugBase* bug )
