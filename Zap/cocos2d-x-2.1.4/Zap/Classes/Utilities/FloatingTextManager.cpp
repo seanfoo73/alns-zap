@@ -64,6 +64,12 @@ void FloatingTextManager::update( float _dt )
 		)
 	{
 		obj = (*i);
+        
+        if( obj == NULL )
+        {
+            ++i;
+            break;
+        }
 		obj->label->setPosition( ccp( 	obj->label->getPositionX(),
 										obj->label->getPositionY() + ( m_fMoveSpeed * _dt ) ) );
 		obj->label->setOpacity( obj->label->getOpacity()-m_fAlphaSpeed );
