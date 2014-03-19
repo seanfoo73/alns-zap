@@ -30,6 +30,9 @@ void FloatingTextManager::addFloatingText( const char* _txt, float _x, float _y,
 		CCLOG("FLOATINGTEXTMANAGER::ADDFLOATINGTEXT:: does not have refernce to layer or floating text list deleted.");
 		return;
 	}
+    
+    if( m_pLayer == NULL )
+        return;
 
 	CCLabelTTF* newLabel = CCLabelTTF::create( _txt, "fonts/Roboto-Regular.ttf", _size );
 
@@ -109,4 +112,6 @@ FloatingTextManager::~FloatingTextManager()
 
 	if( m_pFloatingText )
 		delete m_pFloatingText;
+    
+    m_pLayer = NULL;
 }
